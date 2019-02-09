@@ -1,13 +1,7 @@
 #!/bin/bash
 
-###Setting some in scripts vars for later easier edit
-
-USER_HOME_FOLDER='/home/ec2-user'
-REPO_HOME_FOLDER=$USER_HOME_FOLDER'/finalProject-OpsSchool'
-ANSIBLE_PATH=$REPO_HOME_FOLDER/'ansible'
-
 # Downloading and installing Prerequisites
-cd $USER_HOME_FOLDER
+cd /home/ec2-user
 sudo yum update -y
 sudo yum install unzip -y
 sudo yum install wget -y
