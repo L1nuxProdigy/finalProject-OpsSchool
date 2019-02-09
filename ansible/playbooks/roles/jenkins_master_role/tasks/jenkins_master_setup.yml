@@ -1,0 +1,4 @@
+---
+tasks: 
+- name: install jenkins server
+  jenkins_package_state: present

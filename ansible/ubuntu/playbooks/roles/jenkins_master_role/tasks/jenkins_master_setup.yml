@@ -1,5 +1,0 @@
----
-- name: install httpd, replace html, add line to hosts file
-  tasks: 
-  - name: install jenkins server
-    jenkins_package_state: present
