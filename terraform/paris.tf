@@ -15,7 +15,7 @@ variable "ubuntu_image" {default = "ami-08182c55a1c188dee"}
 variable "RHEL_image" {default = "ami-5026902d"}
 
 ### Machines Configurations Scripts ###
-#example: variable "user_data_dummy_exporter_path1" {}
+variable "ansible_server_user_data_script" {}
 
 ##################################################################################
 # PROVIDERS
@@ -217,7 +217,7 @@ resource "aws_security_group" "SecurityGroup_main" {
 # EC2 Resources
 ##################################################################################
 
-resource "aws_instance" "App_with_Consul_client-1" {
+resource "aws_instance" "Ansible_Server" {
 	ami           = "${var.ubuntu_image}"
 	instance_type = "t2.micro"
 	key_name        = "${var.aws_key_name}"
@@ -226,8 +226,8 @@ resource "aws_instance" "App_with_Consul_client-1" {
 	iam_instance_profile = "${aws_iam_instance_profile.Consul_IAM_Profile.name}"
 	
 	tags = {
-	Name = "APP1_by_Terraform"
+	Name = "Ansible_Server- TerraBuild"
 	}
 	
-	user_data = ""
+	user_data = "${file(var.ansible_server_user_data_script)}"
 }

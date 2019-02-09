@@ -1,9 +1,14 @@
 #!/bin/bash
 
 ###Setting some in scripts vars for later easier edit
+
+# foundations path
 REPO_HOME_FOLDER='/home/ubuntu/finalProject-OpsSchool'
 TERRAFORM_VARIABLE_FILE=$REPO_HOME_FOLDER/'terraform/vars'
 TERRAFORM_VARIABLE_TEMP_FILE=$REPO_HOME_FOLDER/'terraform/tempVars'
+
+# user data path
+ANSIBLE_PATH=$REPO_HOME_FOLDER/'ansible'
 
 ### setting a "tempVars" file to replace the original "vars" file
 cat $TERRAFORM_VARIABLE_FILE | head -3 > $TERRAFORM_VARIABLE_TEMP_FILE
@@ -11,7 +16,7 @@ cat $TERRAFORM_VARIABLE_FILE | head -3 > $TERRAFORM_VARIABLE_TEMP_FILE
 ### adding the data to the "tempVars" file
 
 # dummy exporter
-echo 'user_data_dummy_exporter_path1 = "'$REPO_HOME_FOLDER'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
+echo 'ansible_server_user_data_script = "'$ANSIBLE_PATH/ansible_server'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
 
 
 
