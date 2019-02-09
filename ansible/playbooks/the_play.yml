@@ -11,14 +11,10 @@
       update_cache: yes
       
   - name: add jenkins apt-key
-    apt_key: 
-      url: https://pkg.jenkins.io/debian/jenkins-ci.org.key
-      state: present
+    apt_key: url=https://pkg.jenkins.io/debian-stable/jenkins.io.key state=present
       
   - name: configure the repository
-    apt_repository: 
-      repo:'deb https://pkg.jenkins.io/debian-stable binary/'
-      state: present
+    apt_repository: repo='deb https://pkg.jenkins.io/debian-stable binary/' state=present
       
   - name: install jenkins
     apt:
