@@ -1,0 +1,20 @@
+#!/bin/bash
+
+###Setting some in scripts vars for later easier edit
+
+USER_HOME_FOLDER='/home/ubuntu'
+REPO_HOME_FOLDER=$USER_HOME_FOLDER'/finalProject-OpsSchool'
+ANSIBLE_PATH=$REPO_HOME_FOLDER/'ansible/ubuntu'
+ANSIBLE_PLAYBOOK_PATH=$ANSIBLE_PATH/'playbooks'
+CONSUL_PATH=$REPO_HOME_FOLDER/'consul/ubuntu'
+
+## finding jenkins-master ip
+while [[ $(consul members | head -n3 | wc -l | bc) < 3 ]]; do
+        sleep 4
+done
+
+x=$(dig @127.0.0.1 -p 8600 consul-jenkins-master.node.consul +noall +answer | tail -n1)
+x2=${x# }
+x3=$(echo $x2 | cut -d ' ' -f5)
+
+sed -i 's/jenkins_master_enter_here/$x3/g' $ANSIBLE_PLAYBOOK_PATH/hosts.yml

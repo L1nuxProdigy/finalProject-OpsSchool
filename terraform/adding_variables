@@ -16,7 +16,7 @@ ANSIBLE_RHEL_SERVER=$ANSIBLE_PATH/'RHEL/initial_call_for_server'
 
 # Consul Path #
 CONSUL_PATH=$REPO_HOME_FOLDER/'consul'
-CONSUL_CLIENT_UBUNTU_PATH=$CONSUL_PATH/'ubuntu/consul_install_client'
+CONSUL_CLIENT_UBUNTU_PATH=$CONSUL_PATH/'ubuntu'
 
 # blabla #
 
@@ -30,7 +30,7 @@ echo 'rhel_ansible_server_user_data_script = "'$ANSIBLE_RHEL_SERVER'"' >> $TERRA
 echo 'ubuntu_ansible_server_user_data_script = "'$ANSIBLE_UBUNTU_SERVER'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
 
 # Temp #
-echo 'ubuntu_consul_client = "'$CONSUL_CLIENT_UBUNTU_PATH'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
+echo 'ubuntu_consul_client_for_jenkins = "'$CONSUL_CLIENT_UBUNTU_PATH'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
 
 
 

@@ -1,0 +1,8 @@
+---
+- hosts: jenkins_master_hosts
+  vars_files:
+    - ./variables.yml
+  remote_user: ubuntu
+  become: yes
+  roles:
+    - jenkins_master_role

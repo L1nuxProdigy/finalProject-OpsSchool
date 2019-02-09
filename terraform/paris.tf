@@ -21,7 +21,7 @@ variable "rhel_ansible_server_user_data_script" {}
 variable "ubuntu_ansible_server_user_data_script" {}
 
 # Temp
-variable "ubuntu_consul_client" {}
+variable "ubuntu_consul_client_for_jenkins" {}
 
 
 ##################################################################################
@@ -251,5 +251,5 @@ resource "aws_instance" "Free_Machine" {
 	Name = "FREE-TerraBuild"
 	}
 	
-	user_data = "${file(var.ubuntu_consul_client)}"
+	user_data = "${file(var.ubuntu_consul_client_for_jenkins)}"
 }

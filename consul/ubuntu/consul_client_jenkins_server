@@ -16,6 +16,7 @@ sudo mkdir /var/lib/consul /etc/consul.d
 LOCAL_IPV4=$(curl "http://169.254.169.254/latest/meta-data/local-ipv4")
 
 cat << EOCCF >/etc/consul.d/agent.hcl
+node_name = "consul-jenkins-master"
 client_addr =  "0.0.0.0"
 recursors =  ["127.0.0.1"]
 bootstrap =  false

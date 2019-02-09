@@ -1,16 +1,14 @@
 #!/bin/bash
 
 # Downloading and installing Prerequisites
-cd /home/ec2-user
-sudo yum update -y
-sudo yum install unzip -y
-sudo yum install wget -y
+sudo apt-get update -y
+sudo apt install unzip -y
 sudo wget https://releases.hashicorp.com/consul/1.4.0/consul_1.4.0_linux_amd64.zip
 
 # Unzipping and moving the binary to path
 sudo unzip consul_1.4.0_linux_amd64.zip
-sudo mv ./consul /usr/local/sbin/consul
-sudo chown ec2-user /usr/local/sbin/consul
+sudo mv ./consul /usr/local/bin/consul
+sudo chown ubuntu /usr/local/bin/consul
 
 
 ## consul client command
@@ -38,7 +36,7 @@ After=network-online.target
 [Service]
 LimitNOFILE=65536
 Restart=on-failure
-ExecStart=/usr/local/sbin/consul agent -config-dir /etc/consul.d
+ExecStart=/usr/local/bin/consul agent -config-dir /etc/consul.d
 ExecReload=/bin/kill -HUP $MAINPID
 KillSignal=SIGINT
 Type=notify
