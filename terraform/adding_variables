@@ -1,11 +1,21 @@
 #!/bin/bash
 
-#Setting some in scripts vars for later easier edit
+###Setting some in scripts vars for later easier edit
 REPO_HOME_FOLDER='/home/ubuntu/finalProject-OpsSchool'
 TERRAFORM_VARIABLE_FILE=$REPO_HOME_FOLDER/'terraform/vars'
+TERRAFORM_VARIABLE_TEMP_FILE=$REPO_HOME_FOLDER/'terraform/tempVars'
+
+### setting a "tempVars" file to replace the original "vars" file
+cat $TERRAFORM_VARIABLE_FILE > $TERRAFORM_VARIABLE_TEMP_FILE
+
+### adding the data to the "tempVars" file
 
 # dummy exporter
-echo 'user_data_dummy_exporter_path1 = "'$REPO_HOME_FOLDER'"' >> $TERRAFORM_VARIABLE_FILE
+echo 'user_data_dummy_exporter_path1 = "'$REPO_HOME_FOLDER'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
+
+### moving the new data from "tempVars" to "vars"
+cat $TERRAFORM_VARIABLE_TEMP_FILE > $TERRAFORM_VARIABLE_FILE
+rm -rf $TERRAFORM_VARIABLE_TEMP_FILE
 
 
 
