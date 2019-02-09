@@ -15,3 +15,7 @@ $ANSIBLE_PATH/'consul_server'
 
 ## installing ansible server
 $ANSIBLE_PATH/'ansible_server'
+
+## in practive does nothing, for validation only
+cd $USER_HOME_FOLDER
+touch initial_call_finished.checkpoint
