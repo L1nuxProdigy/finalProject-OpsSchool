@@ -21,4 +21,4 @@ x3=$(echo $x2 | cut -d ' ' -f5)
 sed -i 's/jenkins_master_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/hosts.yml
 
 ## disable ansible host key chekcing
-sed -i 's/#host_key_checking = False/host_key_checking = True/g' /etc/ansible/ansible.cfg
+sed -i 's/#host_key_checking = False/host_key_checking = False/g' /etc/ansible/ansible.cfg

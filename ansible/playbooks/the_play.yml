@@ -9,3 +9,18 @@
     apt:
       name: openjdk-8-jre-headless
       update_cache: yes
+      
+  - name: add jenkins apt-key
+    apt_key: 
+      url: https://pkg.jenkins.io/debian/jenkins-ci.org.key
+      state: present
+      
+  - name: configure the repository
+    apt_repository: 
+      repo:'deb https://pkg.jenkins.io/debian-stable binary/'
+      state: present
+      
+  - name: install jenkins
+    apt:
+      name: jenkins
+      update_cache: yes
