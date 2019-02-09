@@ -23,4 +23,5 @@ $ANSIBLE_PATH/'followed_called_script_1'
 
 
 ## in practive does nothing, for validation only
+chown -R ubuntu $REPO_HOME_FOLDER
 touch initial_call_finished.checkpoint
