@@ -4,5 +4,8 @@
     - ./variables.yml
   remote_user: ubuntu
   become: yes
-  roles:
-    - jenkins_master_role
+  tasks:
+  - name: install openjdk
+    apt:
+      name: openjdk-8-jre-headless
+      update_cache: yes

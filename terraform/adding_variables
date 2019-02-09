@@ -18,6 +18,10 @@ ANSIBLE_RHEL_SERVER=$ANSIBLE_PATH/'RHEL/initial_call_for_server'
 CONSUL_PATH=$REPO_HOME_FOLDER/'consul'
 CONSUL_CLIENT_UBUNTU_PATH=$CONSUL_PATH/'ubuntu'
 
+# Jenkins #
+JENKINS_PATH=$REPO_HOME_FOLDER/'jenkins'
+JENKINS_SERVER=$JENKINS_PATH/'initial_call_for_server'
+
 # blabla #
 
 ### setting a "tempVars" file to replace the original "vars" file
@@ -30,7 +34,7 @@ echo 'rhel_ansible_server_user_data_script = "'$ANSIBLE_RHEL_SERVER'"' >> $TERRA
 echo 'ubuntu_ansible_server_user_data_script = "'$ANSIBLE_UBUNTU_SERVER'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
 
 # Temp #
-echo 'ubuntu_consul_client_for_jenkins = "'$CONSUL_CLIENT_UBUNTU_PATH/consul_client_jenkins_server'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
+echo 'jenkins_server_user_data_script = "'$JENKINS_SERVER'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
 
 
 
