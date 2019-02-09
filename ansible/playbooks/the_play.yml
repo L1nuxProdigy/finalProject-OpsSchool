@@ -17,6 +17,4 @@
     apt_repository: repo='deb https://pkg.jenkins.io/debian-stable binary/' state=present
       
   - name: install jenkins
-    apt:
-      name: jenkins
-      update_cache: yes
+    apt: name=jenkins update_cache=yes
