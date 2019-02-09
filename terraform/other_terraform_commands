@@ -1,1 +1,4 @@
-terraform destroy -var-file='./variables' -target aws_instance.kibana
+## destroy ansible server instance only
+terraform destroy -var-file='vars' -target aws_instance.Ansible_Server
+
+##

@@ -47,7 +47,7 @@ After=network-online.target
 [Service]
 LimitNOFILE=65536
 Restart=on-failure
-ExecStart=/usr/local/bin/consul agent -config-dir /etc/consul.d
+ExecStart=/usr/local/sbin/consul agent -config-dir /etc/consul.d
 ExecReload=/bin/kill -HUP $MAINPID
 KillSignal=SIGINT
 Type=notify
