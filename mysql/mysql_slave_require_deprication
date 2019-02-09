@@ -1,0 +1,87 @@
+#!/bin/bash
+
+###Path Vars
+USER_HOME_FOLDER='/home/ubuntu'
+REPO_HOME_FOLDER=$USER_HOME_FOLDER'/finalProject-OpsSchool'
+ANSIBLE_PATH=$REPO_HOME_FOLDER/'ansible/ubuntu'
+ANSIBLE_PLAYBOOK_PATH=$ANSIBLE_PATH/../'playbooks'
+CONSUL_PATH=$REPO_HOME_FOLDER/'consul/ubuntu'
+PROMETHEUS_PATH=$REPO_HOME_FOLDER/'prometheus'
+SQL_PATH=$REPO_HOME_FOLDER/'mysql'
+
+cd $USER_HOME_FOLDER
+git clone https://github.com/L1nuxProdigy/finalProject-OpsSchool
+
+# variables #
+LOCAL_IPV4=$(curl "http://169.254.169.254/latest/meta-data/local-ipv4")
+DB=spree
+DUMP_FILE=$SQL_PATH/'spree_all.sql'
+USER=root
+PASS=11111
+MASTER_HOST=sql-master.service.consul
+SLAVE_HOST=${LOCAL_IPV4}
+
+## some files are getting locked in the installation process so delete them prehand ##
+sudo apt-get update
+sudo rm -rf /var/lib/dpkg/lock
+sudo rm -rf /var/lib/dpkg/lock-frontend
+sudo rm -rf /var/cache/apt/archives/lock
+sudo rm -rf /var/cache/debconf/config.dat
+
+## installing MySQL ##
+wget https://repo.percona.com/apt/percona-release_latest.$(lsb_release -sc)_all.deb
+sudo dpkg -i percona-release_latest.$(lsb_release -sc)_all.deb
+sudo apt-get update
+export MYSQL_ROOT_PASSWORD=
+export DEBIAN_FRONTEND=noninteractive
+echo "percona-server-server-5.7 percona-server-server-5.7/root-pass password $MYSQL_ROOT_PASSWORD" | debconf-set-selections
+echo "percona-server-server-5.7 percona-server-server-5.7/re-root-pass password $MYSQL_ROOT_PASSWORD" | debconf-set-selections
+sudo apt install -y percona-server-server-5.7 percona-server-client-5.7
+rm -rf percona-release_latest.$(lsb_release -sc)_all.deb
+
+##  Configuring MySQL ##
+sudo bash -c "echo bind-address = ${LOCAL_IPV4} >> /etc/mysql/percona-server.conf.d/mysqld.cnf"
+sudo bash -c "echo server-id=2 >> /etc/mysql/percona-server.conf.d/mysqld.cnf"
+sudo bash -c "echo relay_log=/var/lib/mysql/relay-log >> /etc/mysql/percona-server.conf.d/mysqld.cnf"
+## for server not for slave ###sudo bash -c "echo log-bin=/var/lib/mysql/mysql-bin >> /etc/mysql/percona-server.conf.d/mysqld.cnf"
+sudo service mysql restart
+sleep 30
+sudo mysql -e "CREATE DATABASE spree;"
+sudo mysql -e "CREATE USER 'root'@'%' IDENTIFIED BY '11111';"
+sudo mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%';"
+
+# Take note of the master log position at the time of dump
+MASTER_STATUS=$(sudo mysql -h $MASTER_HOST "-u$USER" "-p$PASS" -ANe "SHOW MASTER STATUS;" | awk '{print $1 " " $2}')
+LOG_FILE=$(echo $MASTER_STATUS | cut -f1 -d ' ')
+LOG_POS=$(echo $MASTER_STATUS | cut -f2 -d ' ')
+echo "  - Current log file is $LOG_FILE and log position is $LOG_POS"
+
+# Import the dump into slaves and activate replication with
+# binary log file and log position obtained from master.##
+echo "SLAVE: $SLAVE_HOST"
+echo " - Creating database copy"
+sudo mysql -h $SLAVE_HOST "-u$USER" "-p$PASS" -e "DROP DATABASE IF EXISTS $DB; CREATE DATABASE $DB;"
+
+#scp $DUMP_FILE $SLAVE_HOST:$DUMP_FILE >/dev/null
+sudo mysql -h $SLAVE_HOST "-u$USER" "-p$PASS" $DB < $DUMP_FILE
+echo "  - Setting up slave replication"
+sudo mysql -h $SLAVE_HOST "-u$USER" "-p$PASS" $DB <<-EOSQL &
+    STOP SLAVE;
+    CHANGE MASTER TO MASTER_HOST='$MASTER_HOST',
+    MASTER_USER='$USER',
+    MASTER_PASSWORD='$PASS',
+    MASTER_LOG_FILE='$LOG_FILE',
+    MASTER_LOG_POS=$LOG_POS;
+    START SLAVE;
+EOSQL
+
+# Wait for slave to get started and have the correct status
+sleep 2
+
+# Check if replication status is OK
+SLAVE_OK=$(sudo mysql -h $SLAVE_HOST "-u$USER" "-p$PASS" -e "SHOW SLAVE STATUS\G;" | grep 'Waiting for master')
+if [ -z "$SLAVE_OK" ]; then
+    echo "  - Error ! Wrong slave IO state."
+else
+    echo "  - Slave IO state OK"
+fi

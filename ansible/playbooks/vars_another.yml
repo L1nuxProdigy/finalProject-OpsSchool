@@ -1,0 +1,56 @@
+---
+kubeadm_token: "gqv3y0.91c3dhvt24c2s63h"
+k8s_master_ip: kubernetes_master_enter_here
+k8s_node_ip: kubernetes_node_one_enter_here
+k8s_replication_controller_path: /home/ubuntu/finalProject-OpsSchool/kubernetes/k8s_replication_controller.yml
+k8s_deployment_path: /home/ubuntu/finalProject-OpsSchool/kubernetes/k8s_deployment.yml
+k8s_svc_path: /home/ubuntu/finalProject-OpsSchool/kubernetes/k8s_service.yml
+kube_path_ubuntu_user: /home/ubuntu/.kube
+
+
+jenkins_fixed_config_files_path: /home/ubuntu/finalProject-OpsSchool/jenkins/config_files/JenkinsRunningFolder
+jenkins_home_folder: /var/lib/jenkins
+
+jenkins_config_xml_debian: "{{ jenkins_home_folder }}/config.xml"
+
+jenkins_config_xml_fixed: "{{ jenkins_fixed_config_files_path }}/config.xml"
+jenkins_location_xml: "{{ jenkins_fixed_config_files_path }}/jenkins.model.JenkinsLocationConfiguration.xml"
+jenkins_git_configure_system_xml: "{{ jenkins_fixed_config_files_path }}/github-plugin-configuration.xml"
+jenkins_credentials_xml: "{{ jenkins_fixed_config_files_path }}/credentials.xml"
+jenkins_nodes_dir: "{{ jenkins_fixed_config_files_path }}/nodes"
+jenkins_secrets_dir: "{{ jenkins_fixed_config_files_path }}/secrets"
+jenkins_jobs_dir: "{{ jenkins_fixed_config_files_path }}/jobs"
+
+jenkins_java_opts: "-Djenkins.install.runSetupWizard=false"
+
+jenkins_port: "8080"
+jenkins_url: "http://Change_Me_to_IP"
+
+jenkins_plugins:
+  - credentials-binding
+  - pipeline-github-lib
+  - pipeline-stage-view
+  - git
+  - ssh-slaves
+  
+  - kubernetes-cd
+  - ssh-agent
+  
+  - log-parser
+  - copyartifact
+  - workflow-aggregator
+  - workflow-multibranch
+  - docker-workflow
+  - template-project
+  - github-api
+  
+  - cloudbees-folder
+  - antisamy-markup-formatter
+  - build-timeout
+  - timestamper
+  - ws-cleanup
+  - ant
+  - gradle
+  - workflow-aggregator
+  - github-branch-source
+  - subversion

@@ -1,0 +1,25 @@
+## destroy ansible server instance only
+terraform destroy -var-file='vars' -target aws_instance.Ansible_and_Consul_Server
+terraform destroy -var-file='vars' -target aws_instance.Jenkins_Server
+terraform destroy -var-file='vars' -target aws_instance.Jenkins_Server2
+
+
+
+## destroy 4 instances (jenkins)
+terraform destroy -var-file='vars' -target aws_instance.Ansible_and_Consul_Server -target aws_instance.Jenkins_Server -target aws_instance.Jenkins_Another -target aws_instance.Jenkins_Slave
+
+## destroy 3 instances (K8s)
+terraform destroy -var-file='vars' -target aws_instance.Ansible_and_Consul_Server -target aws_instance.Kubernetes_Server -target aws_instance.Kubernetes_Node
+
+## destroy instances (Spree)
+terraform destroy -var-file='vars' -target aws_instance.Ansible_and_Consul_Server -target aws_instance.Spree
+
+## destroy instances (ELK)
+terraform destroy -var-file='vars' -target aws_instance.Prometheus -target aws_instance.ELK_ElasticSearch -target aws_instance.ELK_Kibana
+
+## destroy instances (SQL)
+terraform destroy -var-file='vars' -target aws_instance.MYSQL_Slave -target aws_instance.MYSQL_Server
+
+## destroy instances (K8s + Jenkins + ELK)
+terraform destroy -var-file='vars' -target aws_instance.Ansible_and_Consul_Server -target aws_instance.Kubernetes_Server -target aws_instance.Kubernetes_Node -target aws_instance.Jenkins_Server -target aws_instance.Jenkins_Another -target aws_instance.Jenkins_Slave -target aws_instance.Jenkins_Sserver2 -target aws_instance.Prometheus -target aws_instance.ELK_ElasticSearch -target aws_instance.ELK_Kibana -target aws_instance.MYSQL_Slave -target aws_instance.MYSQL_Server
+

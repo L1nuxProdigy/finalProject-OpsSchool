@@ -1,0 +1,40 @@
+sed -i 's/d0ckerprodigy\/spreeproject/yeasy\/simple-web/g' /home/ubuntu/finalProject-OpsSchool/kubernetes/k8s_deployment.yml
+
+sed -i 's/latest/3/g' /home/ubuntu/finalProject-OpsSchool/kubernetes/k8s_deployment.yml
+kubectl apply -f /home/ubuntu/finalProject-OpsSchool/kubernetes/k8s_deployment.yml
+kubectl apply -f /home/ubuntu/finalProject-OpsSchool/kubernetes/simple_web_k8s_service.yml
+
+kubectl apply -f /home/ubuntu/finalProject-OpsSchool/kubernetes/simple_web_k8s_deployment.yml
+
+not really important:
+docker run --rm -it -p 9200:80 yeasy/simple-web
+docker run --rm -it -p 9200:80 d0ckerprodigy/spreeproject:5
+
+
+
+sh 'ssh -o StrictHostKeyChecking=no ubuntu@10.0.1.76 \'sed -i "s/port: 3000/port: 80/g" finalProject-OpsSchool/kubernetes/k8s_service.yml\''
+sh 'ssh -o StrictHostKeyChecking=no ubuntu@10.0.1.76 \'sed -i "s/3000/80/g" finalProject-OpsSchool/kubernetes/k8s_deployment.yml\''
+sh 'ssh -o StrictHostKeyChecking=no ubuntu@10.0.1.76 \'sed -i "s/spreeproject[^ ]*/spreeproject:\'$BUILD_NUMBER\'/g" finalProject-OpsSchool/kubernetes/k8s_deployment.yml\''
+sh 'ssh -o StrictHostKeyChecking=no ubuntu@10.0.1.76 \'kubectl apply -f /home/ubuntu/finalProject-OpsSchool/kubernetes/k8s_service.yml\''
+sh 'ssh -o StrictHostKeyChecking=no ubuntu@10.0.1.76 \'kubectl apply -f /home/ubuntu/finalProject-OpsSchool/kubernetes/k8s_deployment.yml\''
+
+
+##static jobs commands (1- version, 2- port, 3-apply stuff)
+ssh -o StrictHostKeyChecking=no ubuntu@10.0.1.128 'sed -i 's/5/17/g' /home/ubuntu/finalProject-OpsSchool/kubernetes/k8s_deployment.yml'
+ssh -o StrictHostKeyChecking=no ubuntu@10.0.1.128 'sed -i 's/3000/80/g' /home/ubuntu/finalProject-OpsSchool/kubernetes/k8s_deployment.yml'
+ssh -o StrictHostKeyChecking=no ubuntu@10.0.1.128 'kubectl apply -f /home/ubuntu/finalProject-OpsSchool/kubernetes/k8s_deployment.yml'
+
+##static jobs commands for service
+ssh -o StrictHostKeyChecking=no ubuntu@10.0.1.76 'sed -i "s/port: 3000/port: 80/g" finalProject-OpsSchool/kubernetes/k8s_service.yml'
+ssh -o StrictHostKeyChecking=no ubuntu@10.0.1.76 'kubectl apply -f /home/ubuntu/finalProject-OpsSchool/kubernetes/k8s_service.yml'
+
+## end game maybe for start
+sh 'ssh -o StrictHostKeyChecking=no ubuntu@Change_IP_Here \'sed -i "s/port: 3000/port: 80/g" finalProject-OpsSchool/kubernetes/k8s_service.yml\''
+sh 'ssh -o StrictHostKeyChecking=no ubuntu@Change_IP_Here \'sed -i "s/3000/80/g" finalProject-OpsSchool/kubernetes/k8s_deployment.yml\''
+sh 'ssh -o StrictHostKeyChecking=no ubuntu@Change_IP_Here \'sed -i "s/latest/22/g" finalProject-OpsSchool/kubernetes/k8s_deployment.yml\''
+sh 'ssh -o StrictHostKeyChecking=no ubuntu@Change_IP_Here \'kubectl apply -f /home/ubuntu/finalProject-OpsSchool/kubernetes/k8s_service.yml\''
+sh 'ssh -o StrictHostKeyChecking=no ubuntu@Change_IP_Here \'kubectl apply -f /home/ubuntu/finalProject-OpsSchool/kubernetes/k8s_deployment.yml\''
+
+sh 'ssh -o StrictHostKeyChecking=no ubuntu@Change_IP_Here \'sed -i "s/port: 3000/port: 80/g" finalProject-OpsSchool/kubernetes/k8s_service.yml\''
+sh 'ssh -o StrictHostKeyChecking=no ubuntu@Change_IP_Here \'sed -i "s/3000/80/g" finalProject-OpsSchool/kubernetes/k8s_deployment.yml\''
+sh 'ssh -o StrictHostKeyChecking=no ubuntu@Change_IP_Here \'sed -i "s/spreeproject[^ ]*/spreeproject:\'$BUILD_NUMBER\'/g" finalProject-OpsSchool/kubernetes/k8s_deployment.yml\''

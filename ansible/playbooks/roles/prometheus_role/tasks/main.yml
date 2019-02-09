@@ -1,0 +1,4 @@
+---
+- name: General | Load varibles
+  include_vars:
+    file: vars.yml     

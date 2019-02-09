@@ -1,0 +1,37 @@
+---
+  - name: General | Load varibles
+    include_vars:
+      file: vars.yml
+
+  - name: Jenkins | Install Master | add jenkins apt-key
+    apt_key:
+      url: https://pkg.jenkins.io/debian-stable/jenkins.io.key
+      state: present
+    become: true
+    become_method: sudo
+    
+  - name: Jenkins | Install Master | configure the repository
+    apt_repository:
+      repo: 'deb https://pkg.jenkins.io/debian-stable binary/'
+      state: present
+    become: true
+    become_method: sudo
+
+  - name: Jenkins | Install Master | install jenkins
+    apt:
+      name: jenkins
+      update_cache: yes
+    become: true
+    become_method: sudo
+    
+  - name: Jenkins | Install Master | copy config.xml without initial pass or admin authentication
+    copy:
+      src: "{{ jenkins_config_files_fixed }}"
+      dest: "{{ jenkins_config_path_debian }}"
+      owner: jenkins
+      group: jenkins
+      directory_mode: yes
+    notify:
+      - restart jenkins
+    become: true
+    become_method: sudo

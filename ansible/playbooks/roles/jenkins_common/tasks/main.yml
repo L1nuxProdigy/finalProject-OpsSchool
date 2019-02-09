@@ -1,0 +1,7 @@
+---
+  - name: install openjdk
+    apt:
+      name: openjdk-8-jre-headless
+      update_cache: yes
+    become: true
+    become_method: sudo

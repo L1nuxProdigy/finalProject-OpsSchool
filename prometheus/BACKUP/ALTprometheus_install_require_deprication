@@ -1,0 +1,60 @@
+#!/bin/bash
+
+## install and activate prometheus
+wget https://github.com/prometheus/prometheus/releases/download/v2.6.0/prometheus-2.6.0.linux-amd64.tar.gz
+tar xvfz prometheus-*.tar.gz
+cd prometheus-2.6.0.linux-amd64
+echo "  - job_name: dummy_consul_job
+    consul_sd_configs:
+      - server: 'localhost:8500'
+    relabel_configs:
+      - source_labels: [__meta_consul_tags]
+        regex: .*,dummy,.*
+        action: keep
+      - source_labels: [__meta_consul_service]
+        target_label: DUMMY_RELABEL" >> ./prometheus.yml
+./prometheus --config.file=prometheus.yml &
+
+# install file-beat
+curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-6.5.4-amd64.deb
+dpkg -i filebeat-6.5.4-amd64.deb
+
+# setting an interactive shell variable named x3 as a local ip for a consul node
+x=$(dig @127.0.0.1 -p 8600 consul-elasticsearch.node.consul +noall +answer | tail -n1)
+x2=${x# }
+x3=$(echo $x2 | cut -d ' ' -f5)
+# setting an interactive shell variable named x3 as a local ip for a consul node
+y=$(dig @127.0.0.1 -p 8600 consul-kibana.node.consul +noall +answer | tail -n1)
+y2=${y# }
+y3=$(echo $y2 | cut -d ' ' -f5)
+
+## finding the elastic_search private ip
+while [[ ${y3} = 0 ]]; do
+        sleep 15
+		y=$(dig @127.0.0.1 -p 8600 consul-kibana.node.consul +noall +answer | tail -n1)
+		y2=${y# }
+		y3=$(echo $y2 | cut -d ' ' -f5)
+done
+
+## finding the elastic_search private ip
+while [[ ${#x3} = 0 ]]; do
+        sleep 15
+		x=$(dig @127.0.0.1 -p 8600 consul-elasticsearch.node.consul +noall +answer | tail -n1)
+		x2=${x# }
+		x3=$(echo $x2 | cut -d ' ' -f5)
+done
+
+echo 'filebeat.modules:
+- module: system
+  syslog:
+    enabled: true
+  auth:
+    enabled: true
+name: test
+output.elasticsearch:
+  hosts: ["'${x3}':9200"]
+setup.kibana.host: "'${y3}':5601"
+setup.dashboards.enabled: true' > /etc/filebeat/filebeat.yml
+
+sudo systemctl enable filebeat.service
+sudo systemctl start filebeat.service

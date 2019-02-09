@@ -1,0 +1,51 @@
+#!/bin/bash
+
+###Setting some in scripts vars for later easier edit
+
+USER_HOME_FOLDER='/home/ubuntu'
+REPO_HOME_FOLDER=$USER_HOME_FOLDER'/finalProject-OpsSchool'
+ANSIBLE_PATH=$REPO_HOME_FOLDER/'ansible/ubuntu'
+ANSIBLE_PLAYBOOK_PATH=$ANSIBLE_PATH/../'playbooks'
+CONSUL_PATH=$REPO_HOME_FOLDER/'consul/ubuntu'
+PROMETHEUS_PATH=$REPO_HOME_FOLDER/'prometheus'
+SQL_PATH=$REPO_HOME_FOLDER/'mysql'
+
+LOCAL_IPV4=$(curl "http://169.254.169.254/latest/meta-data/local-ipv4")
+
+## some files are getting locked in the installation process so delete them prehand ##
+sudo apt-get update
+sudo rm -rf /var/lib/dpkg/lock
+sudo rm -rf /var/lib/dpkg/lock-frontend
+sudo rm -rf /var/cache/apt/archives/lock
+sudo rm -rf /var/cache/debconf/config.dat
+
+## installing MySQL ##
+wget https://repo.percona.com/apt/percona-release_latest.$(lsb_release -sc)_all.deb
+sudo dpkg -i percona-release_latest.$(lsb_release -sc)_all.deb
+sudo apt-get update
+export MYSQL_ROOT_PASSWORD=
+export DEBIAN_FRONTEND=noninteractive
+echo "percona-server-server-5.7 percona-server-server-5.7/root-pass password $MYSQL_ROOT_PASSWORD" | debconf-set-selections
+echo "percona-server-server-5.7 percona-server-server-5.7/re-root-pass password $MYSQL_ROOT_PASSWORD" | debconf-set-selections
+sudo apt install -y percona-server-server-5.7 percona-server-client-5.7
+rm -rf percona-release_latest.$(lsb_release -sc)_all.deb
+
+##  Configuring MySQL ##
+sudo bash -c "echo bind-address = ${LOCAL_IPV4} >> /etc/mysql/percona-server.conf.d/mysqld.cnf"
+sudo bash -c "echo server-id=1 >> /etc/mysql/percona-server.conf.d/mysqld.cnf"
+sudo bash -c "echo log-bin=/var/lib/mysql/mysql-bin >> /etc/mysql/percona-server.conf.d/mysqld.cnf"
+sudo service mysql restart
+sleep 30
+sudo mysql -e "CREATE DATABASE spree;"
+sudo mysql -e "CREATE USER 'root'@'%' IDENTIFIED BY '11111';"
+sudo mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%';"
+
+sudo mysql -u root spree < $SQL_PATH/spree_all.sql
+
+mysql -u root spree <<-EOSQL &
+    GRANT REPLICATION SLAVE ON *.* TO 'root'@'%' IDENTIFIED BY '11111';
+    FLUSH PRIVILEGES;
+    FLUSH TABLES WITH READ LOCK;
+    DO SLEEP(3600);
+EOSQL
+

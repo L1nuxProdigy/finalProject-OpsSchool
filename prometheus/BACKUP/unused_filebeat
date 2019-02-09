@@ -1,0 +1,11 @@
+echo 'filebeat.modules:
+- module: system
+  syslog:
+    enabled: true
+  auth:
+    enabled: true
+name: test
+output.elasticsearch:
+  hosts: ["'${x3}':9200"]
+setup.kibana.host: "'${y3}':5601"
+setup.dashboards.enabled: true' > /etc/filebeat/filebeat.yml

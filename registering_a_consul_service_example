@@ -1,0 +1,16 @@
+cat << EOCSU >/etc/consul.d/mysql-master.json
+{
+ "service": {
+   "name": "mysql-master",
+   "tags": ["mysql-master"],
+   "port": 3306,
+   "check": {
+        "id": "mysql-master-health",
+       "name": "mysql-master TCP health",
+       "tcp": "${LOCAL_IPV4}:3306",
+       "interval": "10s",
+        "timeout": "1s"
+       }
+   }
+}
+EOCSU

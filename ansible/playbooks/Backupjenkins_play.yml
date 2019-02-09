@@ -1,0 +1,15 @@
+---
+- name: jenkins machines install open jdk
+  hosts: jenkins_machines
+  roles:
+    - jenkins_common
+
+- name: install docker on jenkins node with the k8s role
+  hosts: jenkins_nodes
+  roles:
+    - kubernetes_docker
+
+- name: jenkins server
+  hosts: jenkins_masters
+  roles:
+    - jenkins_server

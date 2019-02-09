@@ -1,0 +1,25 @@
+---
+  - name: General | Load varibles
+    include_vars:
+      file: vars.yml
+
+  - name: Nadav Role | add jenkins apt-key
+    apt_key:
+      url: https://pkg.jenkins.io/debian-stable/jenkins.io.key
+      state: present
+    become: true
+    become_method: sudo
+    
+  - name: Nadav Role | configure the repository
+    apt_repository:
+      repo: 'deb https://pkg.jenkins.io/debian-stable binary/'
+      state: present
+    become: true
+    become_method: sudo
+
+  - name: Nadav Role | install jenkins
+    apt:
+      name: jenkins
+      update_cache: yes
+    become: true
+    become_method: sudo

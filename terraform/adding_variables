@@ -1,0 +1,95 @@
+#!/bin/bash
+
+###Setting some in scripts vars for later easier edit
+
+## foundations path
+REPO_HOME_FOLDER='/home/ubuntu/finalProject-OpsSchool'
+TERRAFORM_VARIABLE_FILE=$REPO_HOME_FOLDER/'terraform/vars'
+TERRAFORM_VARIABLE_TEMP_FILE=$REPO_HOME_FOLDER/'terraform/tempVars'
+
+## user data path
+
+# Ansible Path #
+ANSIBLE_PATH=$REPO_HOME_FOLDER/'ansible'
+ANSIBLE_UBUNTU_SERVER=$ANSIBLE_PATH/'ubuntu/initial_call_for_server'
+ANSIBLE_RHEL_SERVER=$ANSIBLE_PATH/'RHEL/initial_call_for_server'
+
+# Consul Path #
+CONSUL_PATH=$REPO_HOME_FOLDER/'consul'
+CONSUL_CLIENT_UBUNTU_PATH=$CONSUL_PATH/'ubuntu'
+
+# Jenkins Path #
+JENKINS_PATH=$REPO_HOME_FOLDER/'jenkins'
+JENKINS_SERVER=$JENKINS_PATH/'initial_call_for_server'
+JENKINS_ANOTHER=$JENKINS_PATH/'initial_call_for_another'
+JENKINS_NODE=$JENKINS_PATH/'initial_call_for_node'
+
+# Kubernetes Path #
+KUBERNETES_PATH=$REPO_HOME_FOLDER/'kubernetes'
+KUBERNETES_SERVER=$KUBERNETES_PATH/'initial_call_for_kubernetes_server'
+KUBERNETES_NODE=$KUBERNETES_PATH/'initial_call_for_kubernetes_node'
+
+# Spree Path #
+SPREE_PATH=$REPO_HOME_FOLDER/'spree'
+SPREE_USER_DATA=$SPREE_PATH/'spree_test'
+
+# Prometheus #
+PROMETHEUS_PATH=$REPO_HOME_FOLDER/'prometheus'
+PROMETHEUS_USER_DATA=$PROMETHEUS_PATH/'initial_call_for_prometheus'
+
+# ELK #
+ELK_PATH=$REPO_HOME_FOLDER/'elk'
+ELASTIC_SEARCH_USER_DATA=$ELK_PATH/'initial_call_for_elasticsearch'
+KIBANA_USER_DATA=$ELK_PATH/'initial_call_for_kibana'
+
+# MySQL #
+SQL_PATH=$REPO_HOME_FOLDER/'mysql'
+MYSQL_MASTER_USER_DATA=$SQL_PATH/'initial_call_for_sql_master'
+MYSQL_SLAVE_USER_DATA=$SQL_PATH/'initial_call_for_sql_slave'
+
+### setting a "tempVars" file to replace the original "vars" file
+cat $TERRAFORM_VARIABLE_FILE | head -3 > $TERRAFORM_VARIABLE_TEMP_FILE
+
+### adding the data to the "tempVars" file
+
+# Ansible #
+echo -e "\n### Ansible ###" >> $TERRAFORM_VARIABLE_TEMP_FILE
+echo 'rhel_ansible_server_user_data_script = "'$ANSIBLE_RHEL_SERVER'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
+echo 'ubuntu_ansible_server_user_data_script = "'$ANSIBLE_UBUNTU_SERVER'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
+
+# Kubernetes #
+echo -e "\n### Kubernetes ###\n" >> $TERRAFORM_VARIABLE_TEMP_FILE
+echo 'kubernetes_server_user_data_script = "'$KUBERNETES_SERVER'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
+echo 'kubernetes_node_user_data_script = "'$KUBERNETES_NODE'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
+
+# Spree #
+echo -e "\n### Spree ###\n" >> $TERRAFORM_VARIABLE_TEMP_FILE
+echo 'spree_user_data_script = "'$SPREE_USER_DATA'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
+
+# Jenkins #
+echo -e "\n### Jenkins ###\n" >> $TERRAFORM_VARIABLE_TEMP_FILE
+echo 'jenkins_server_user_data_script = "'$JENKINS_SERVER'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
+echo 'jenkins_another_user_data_script = "'$JENKINS_ANOTHER'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
+echo 'jenkins_node_user_data_script = "'$JENKINS_NODE'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
+
+# Prometheus #
+echo -e "\n### Prometheus ###\n" >> $TERRAFORM_VARIABLE_TEMP_FILE
+echo 'prometheus_user_data_script = "'$PROMETHEUS_USER_DATA'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
+
+# ELK #
+echo -e "\n### ELK ###\n" >> $TERRAFORM_VARIABLE_TEMP_FILE
+echo 'elastic_search_user_data_script = "'$ELASTIC_SEARCH_USER_DATA'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
+echo 'kibana_user_data_script = "'$KIBANA_USER_DATA'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
+
+# MySQL #
+echo -e "\n### MySQL ###\n" >> $TERRAFORM_VARIABLE_TEMP_FILE
+echo 'mysql_Server_user_data_script = "'$MYSQL_MASTER_USER_DATA'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
+echo 'mysql_Slave_user_data_script = "'$MYSQL_SLAVE_USER_DATA'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
+
+
+### moving the new data from "tempVars" to "vars"
+cat $TERRAFORM_VARIABLE_TEMP_FILE > $TERRAFORM_VARIABLE_FILE
+rm -rf $TERRAFORM_VARIABLE_TEMP_FILE
+
+
+

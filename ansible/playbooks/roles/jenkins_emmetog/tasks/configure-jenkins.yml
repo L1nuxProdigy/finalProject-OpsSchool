@@ -1,0 +1,43 @@
+---
+# Jenkins should not be running while we write configuration files, otherwise
+# otherwise some data might be overwritten when it restarts.
+- include_tasks: "{{ jenkins_install_via }}/stop.yml"
+
+- name: Ensure correct ownership of JENKINS_HOME directory
+  file:
+    path: "{{ jenkins_home }}"
+    owner: "{{ jenkins_config_owner }}"
+    group: "{{ jenkins_config_group }}"
+    mode: 0755
+    state: directory
+
+- name: Configuration file is up to date (config.xml)
+  template:
+    src: "{{ jenkins_source_config_xml }}"
+    dest: "{{ jenkins_home }}/config.xml"
+    mode: 0644
+    owner: "{{ jenkins_config_owner }}"
+    group: "{{ jenkins_config_group }}"
+  when: jenkins_include_secrets
+
+- name: Configure Jenkins location
+  template:
+    src: files/jenkins.model.JenkinsLocationConfiguration.xml.j2
+    dest: "{{ jenkins_home }}/jenkins.model.JenkinsLocationConfiguration.xml"
+    mode: 0644
+    owner: "{{ jenkins_config_owner }}"
+    group: "{{ jenkins_config_group }}"
+
+- name: secrets dir is up to date
+  copy:
+    src: "{{ jenkins_source_secrets }}"
+    dest: "{{ jenkins_home }}/secrets"
+    owner: "{{ jenkins_config_owner }}"
+    group: "{{ jenkins_config_group }}"
+  when: jenkins_include_secrets
+
+- name: set permissions on secrets dir
+  file:
+    path: "{{ jenkins_home }}/secrets"
+    mode: 0700
+  when: jenkins_include_secrets

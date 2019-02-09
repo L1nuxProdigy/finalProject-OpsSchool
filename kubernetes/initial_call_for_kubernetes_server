@@ -1,0 +1,28 @@
+#!/bin/bash
+
+###Setting some in scripts vars for later easier edit
+
+USER_HOME_FOLDER='/home/ubuntu'
+REPO_HOME_FOLDER=$USER_HOME_FOLDER'/finalProject-OpsSchool'
+ANSIBLE_PATH=$REPO_HOME_FOLDER/'ansible/ubuntu'
+ANSIBLE_PLAYBOOK_PATH=$ANSIBLE_PATH/../'playbooks'
+CONSUL_PATH=$REPO_HOME_FOLDER/'consul/ubuntu'
+KUBERNETES_PATH=$REPO_HOME_FOLDER/'kubernetes'
+
+## cloning git repo
+cd $USER_HOME_FOLDER
+git clone https://github.com/L1nuxProdigy/finalProject-OpsSchool
+
+## installing consul
+$CONSUL_PATH/'consul_client_kubernetes_server'
+
+## adding public key so jenkins master can connect
+$ANSIBLE_PATH/'ansible_node'
+
+## adding private key testing for kubadeam join
+$KUBERNETES_PATH/'adding_key_test_for_server'
+
+
+## in practive does nothing, for validation only
+chown -R ubuntu $REPO_HOME_FOLDER
+touch initial_call_finished.checkpoint

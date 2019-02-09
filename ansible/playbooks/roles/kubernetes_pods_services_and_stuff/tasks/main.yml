@@ -1,0 +1,19 @@
+---
+  - name: General | Load varibles
+    include_vars:
+      file: vars.yml
+ 
+  - name: K8S | label the node
+    shell: kubectl label nodes {{ k8s_node_ip }} Destiny=SpreeApp
+    become: true
+    become_user: ubuntu
+    
+  - name: K8S | deploy replication controller
+    shell: kubectl create -f {{ k8s_deployment_path }}
+    become: true
+    become_user: ubuntu
+
+  - name: K8S | deploy a network service
+    shell: kubectl create -f {{ k8s_svc_path }}
+    become: true
+    become_user: ubuntu

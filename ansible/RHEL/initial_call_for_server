@@ -1,0 +1,22 @@
+#!/bin/bash
+
+###Setting some in scripts vars for later easier edit
+
+USER_HOME_FOLDER='/home/ec2-user'
+REPO_HOME_FOLDER=$USER_HOME_FOLDER'/finalProject-OpsSchool'
+ANSIBLE_PATH=$REPO_HOME_FOLDER/'ansible/RHEL'
+CONSUL_PATH=$REPO_HOME_FOLDER/'consul/RHEL'
+
+## cloning git repo
+cd $USER_HOME_FOLDER
+sudo yum install git -y
+git clone https://github.com/L1nuxProdigy/finalProject-OpsSchool
+
+## installing consul
+$CONSUL_PATH/'consul_server'
+
+## installing ansible server
+$ANSIBLE_PATH/'ansible_server'
+
+## in practive does nothing, for validation only
+touch initial_call_finished.checkpoint

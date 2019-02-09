@@ -1,0 +1,12 @@
+#!/bin/bash
+
+## installing python 2.7 for ansible server to be able to connection
+apt install python -y
+
+## adding public key for connection ##
+
+# key for RHEL distro path
+echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC2vi5IkpI3uPTnNkH+lwbdrHOnnYMAoiZ8+woJvwskNFV58GZkcI0ZrB5CKid/O4dYQSmM9xinRoO+untxoUL+v5nHV2Mvtc1VTamWERiCnxb35P9E+CuBhIae9Hul2O8PH+EUAwmJcHHShQ+qpRXftMe9GIqvrJKhi5WEct6pMbv/5d/+dOjujVLiz2R0qxlNwzV3mWpmMZLXcq3bZTKbzO1E/sXz74og5MYgFDJkhwxnRtmgcY6uzkCecAeOm8qfkyfqLfyO77mR/8gKh7+o9//KzSH9rhY8vPcYzn5zuM4KEGvgwfDTr03nw5p6gcVrQEJeMbAGU94aKH5Y28Ej ec2-user@ip-172-31-45-203.eu-central-1.compute.internal" | tee -a /home/ec2-user/.ssh/authorized_keys /root/.ssh/authorized_keys
+
+# key for Ubuntu distro path
+echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC2vi5IkpI3uPTnNkH+lwbdrHOnnYMAoiZ8+woJvwskNFV58GZkcI0ZrB5CKid/O4dYQSmM9xinRoO+untxoUL+v5nHV2Mvtc1VTamWERiCnxb35P9E+CuBhIae9Hul2O8PH+EUAwmJcHHShQ+qpRXftMe9GIqvrJKhi5WEct6pMbv/5d/+dOjujVLiz2R0qxlNwzV3mWpmMZLXcq3bZTKbzO1E/sXz74og5MYgFDJkhwxnRtmgcY6uzkCecAeOm8qfkyfqLfyO77mR/8gKh7+o9//KzSH9rhY8vPcYzn5zuM4KEGvgwfDTr03nw5p6gcVrQEJeMbAGU94aKH5Y28Ej ec2-user@ip-172-31-45-203.eu-central-1.compute.internal" | tee -a /home/ubuntu/.ssh/authorized_keys /root/.ssh/authorized_keys

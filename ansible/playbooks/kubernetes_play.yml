@@ -1,0 +1,21 @@
+---
+- name: kubernetes machines PREREQ
+  hosts: kubernetes_machines
+  roles:
+    - kubernetes_docker
+    - kubernetes_common
+ 
+- name: kubernetes master initial
+  hosts: kubernetes_master
+  roles:
+    - kubernetes_server
+
+- name: kubernetes node initial
+  hosts: kubernetes_node
+  roles:
+    - kubernetes_node
+
+- name: kubernetes setting replication controller and service through server
+  hosts: kubernetes_master
+  roles:
+    - kubernetes_pods_services_and_stuff

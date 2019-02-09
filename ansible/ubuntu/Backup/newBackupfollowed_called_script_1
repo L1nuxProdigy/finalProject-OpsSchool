@@ -1,0 +1,100 @@
+#!/bin/bash
+
+###Setting Functions
+
+# Finding IP is used in Waiting_For_IP_Resolution
+Waiting_For_IP_Resolution () {
+	ip_string_length=0
+	echo "entering loop" >>/home/ubuntu/loop_ip_resu
+	while (( ip_string_length < 4 ))
+	do
+		x=$(dig @127.0.0.1 -p 8600 $consul_machine_name.node.consul +noall +answer | tail -n1)
+		x2=${x# }
+		x3=$(echo $x2 | cut -d ' ' -f5)
+		ip_string_length=${#x3}
+		echo $x >>/home/ubuntu/loop_ip_resu
+		echo $x2 >>/home/ubuntu/loop_ip_resu
+		echo $x3 >>/home/ubuntu/loop_ip_resu
+		echo "end one loop cycle" >>/home/ubuntu/loop_ip_resu
+	done
+	echo "end function" >>/home/ubuntu/loop_ip_resu	
+}
+
+# SSH Healthceck
+SSH_Healthcheck () {
+	echo "SSH Start" >>/home/ubuntu/ssh_health_check
+	echo $x >>/home/ubuntu/ssh_health_check
+	echo $x2 >>/home/ubuntu/ssh_health_check
+	echo $x3 >>/home/ubuntu/ssh_health_check
+	while ( nc -zv $x3 22 2>&1 | grep -q refused ); do
+			sleep 2
+			echo "refused" >> /home/ubuntu/ssh_health_check
+	done
+	echo "SSH done" >>/home/ubuntu/ssh_health_check
+}
+
+###Setting some in scripts vars for later easier edit
+
+USER_HOME_FOLDER='/home/ubuntu'
+REPO_HOME_FOLDER=$USER_HOME_FOLDER'/finalProject-OpsSchool'
+ANSIBLE_PATH=$REPO_HOME_FOLDER/'ansible/ubuntu'
+ANSIBLE_PLAYBOOK_PATH=$ANSIBLE_PATH/../'playbooks'
+CONSUL_PATH=$REPO_HOME_FOLDER/'consul/ubuntu'
+JENKINS_PATH=$REPO_HOME_FOLDER/'jenkins'
+JENKINS_MASTER_CONFIGURATION_FILES=$JENKINS_PATH/'config_files/JenkinsRunningFolder'
+EMMETOG_JENKINS_ANSIBLE_ROLE_PATH=$ANSIBLE_PLAYBOOK_PATH/'roles/jenkins_emmetog'
+
+
+## disable ansible host key chekcing
+sed -i 's/#host_key_checking = False/host_key_checking = False/g' /etc/ansible/ansible.cfg
+
+## Waiting for Consul Clients to be up
+while [[ $(consul members | head -n4 | wc -l | bc) < 4 ]]; do
+        sleep 2
+done
+
+#### Jenkins ####
+
+## Finding the Jenkins Master IP and editing it to the hosts.yml file + SSH_Healthcheck + editing the public ip to jenkins future configuration
+consul_machine_name=consul-jenkins-master
+Waiting_For_IP_Resolution "$consul_machine_name"
+SSH_Healthcheck
+sed -i 's/jenkins_master_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/hosts.yml
+scp -o StrictHostKeyChecking=no root@$x3:$USER_HOME_FOLDER/My_IP $USER_HOME_FOLDER > $USER_HOME_FOLDER/ahhhh 2>&1
+x3=$(cat $USER_HOME_FOLDER/My_IP)
+sed -i 's/Change_Me_to_IP/'$x3'/g' $JENKINS_MASTER_CONFIGURATION_FILES/jenkins.model.JenkinsLocationConfiguration.xml
+sed -i 's/Change_Me_to_IP/'$x3'/g' $EMMETOG_JENKINS_ANSIBLE_ROLE_PATH/defaults/main.yml
+
+## Finding the Jenkins "Another" IP and editing it to the hosts.yml file + SSH_Healthcheck
+consul_machine_name=consul-jenkins-another
+Waiting_For_IP_Resolution "$consul_machine_name"
+SSH_Healthcheck
+sed -i 's/jenkins_another_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/hosts.yml
+
+## Finding the Jenkins node IP and editing it to the hosts.yml file + SSH_Healthcheck
+consul_machine_name=consul-jenkins-node
+Waiting_For_IP_Resolution "$consul_machine_name"
+SSH_Healthcheck
+sed -i 's/jenkins_node_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/hosts.yml
+sed -i 's/Change_Me_to_IP/'$x3'/g' $JENKINS_MASTER_CONFIGURATION_FILES/nodes/NodeStatic/config.xml
+
+#### K8S ####
+
+## Finding the Kubernetes Master IP and editing it to the hosts.yml file + SSH_Healthcheck
+#consul_machine_name=consul-kubernetes-master
+#Waiting_For_IP_Resolution "$consul_machine_name"
+#SSH_Healthcheck
+#sed -i 's/kubernetes_master_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/hosts.yml
+#sed -i 's/kubernetes_master_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/vars.yml
+
+## Finding the Kubernetes Node IP and editing it to the hosts.yml file + SSH_Healthcheck
+#consul_machine_name=consul-kubernetes-node
+#Waiting_For_IP_Resolution "$consul_machine_name"
+#SSH_Healthcheck
+#sed -i 's/kubernetes_node_one_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/hosts.yml
+#sed -i 's/kubernetes_node_one_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/vars.yml
+
+#### RUNNING PLAYBOOKS ####
+#ansible-playbook -i $ANSIBLE_PLAYBOOK_PATH/hosts.yml $ANSIBLE_PLAYBOOK_PATH/kubernetes_play.yml >k8s_ansible_output
+ansible-playbook -i $ANSIBLE_PLAYBOOK_PATH/hosts.yml $ANSIBLE_PLAYBOOK_PATH/jenkins_play.yml >jenkins_ansible_output 
+

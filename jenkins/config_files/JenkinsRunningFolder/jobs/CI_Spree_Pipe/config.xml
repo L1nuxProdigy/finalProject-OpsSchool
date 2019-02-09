@@ -1,0 +1,68 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@2.31">
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.4">
+      <projectUrl>https://github.com/L1nuxProdigy/spreeLive</projectUrl>
+      <displayName></displayName>
+    </com.coravy.hudson.plugins.github.GithubProjectProperty>
+    <org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+      <triggers>
+        <com.cloudbees.jenkins.GitHubPushTrigger plugin="github@1.29.4">
+          <spec></spec>
+        </com.cloudbees.jenkins.GitHubPushTrigger>
+      </triggers>
+    </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+  </properties>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.63">
+    <script>pipeline {
+  environment {
+    registry = &quot;d0ckerprodigy/spreeproject&quot;
+    registryCredential = &apos;dockerhub&apos;
+    dockerImage = &apos;&apos;
+  }
+  agent any
+  stages {
+    stage(&apos;Cloning Git Repo&apos;) {
+      steps {
+        git &apos;https://github.com/L1nuxProdigy/spreeLive&apos;
+      }
+    }
+    stage(&apos;Building image&apos;) {
+      steps{
+        script {
+          dockerImage = docker.build registry + &quot;:$BUILD_NUMBER&quot;
+        }
+      }
+    }
+    stage(&apos;Deploy Image&apos;) {
+      steps{
+        script {
+          docker.withRegistry( &apos;&apos;, registryCredential ) {
+            dockerImage.push()
+          }
+        }
+      }
+    }
+    stage(&apos;Remove Unused docker image&apos;) {
+      steps{
+        sh &quot;docker rmi $registry:$BUILD_NUMBER&quot;
+      }
+    }
+        stage (&apos;Apply to K8s&apos;) {
+      steps{
+        sshagent(credentials : [&apos;a9e580a1-1d3e-4e8a-929c-4f07a36ae54a&apos;]) {
+          sh &apos;ssh -o StrictHostKeyChecking=no ubuntu@Change_Me_to_IP \&apos;sed -i &quot;s/spreeproject[^ ]*/spreeproject:\&apos;$BUILD_NUMBER\&apos;/g&quot; finalProject-OpsSchool/kubernetes/k8s_deployment.yml\&apos;&apos;
+          sh &apos;ssh -o StrictHostKeyChecking=no ubuntu@Change_Me_to_IP \&apos;kubectl apply -f /home/ubuntu/finalProject-OpsSchool/kubernetes/k8s_deployment.yml\&apos;&apos;
+        }
+      }
+        }
+  }
+}
+</script>
+    <sandbox>false</sandbox>
+  </definition>
+  <triggers/>
+  <disabled>false</disabled>
+</flow-definition>
