@@ -11,7 +11,7 @@ variable "key_name" {
 }
 
 ### Machines Configurations Scripts ###
-variable "user_data_dummy_exporter_path1" {}
+#example: variable "user_data_dummy_exporter_path1" {}
 
 ##################################################################################
 # PROVIDERS

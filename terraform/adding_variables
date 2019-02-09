@@ -1,0 +1,11 @@
+#!/bin/bash
+
+#Setting some in scripts vars for later easier edit
+REPO_HOME_FOLDER='/home/ubuntu/finalProject-OpsSchool'
+TERRAFORM_VARIABLE_FILE=$REPO_HOME_FOLDER/'terraform/vars'
+
+# dummy exporter
+echo 'user_data_dummy_exporter_path1 = "'$REPO_HOME_FOLDER'"' >> $TERRAFORM_VARIABLE_FILE
+
+
+
