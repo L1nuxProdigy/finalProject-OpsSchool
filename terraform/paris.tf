@@ -10,6 +10,10 @@ variable "key_name" {
   default = "paris"
 }
 
+### AMI Vars ###
+variable "ubuntu_image" {default = "ami-08182c55a1c188dee"}
+variable "RHEL_image" {default = "ami-5026902d"}
+
 ### Machines Configurations Scripts ###
 #example: variable "user_data_dummy_exporter_path1" {}
 
@@ -214,7 +218,7 @@ resource "aws_security_group" "SecurityGroup_main" {
 ##################################################################################
 
 resource "aws_instance" "App_with_Consul_client-1" {
-	ami           = "ami-0ac019f4fcb7cb7e6"
+	ami           = "${var.ubuntu_image}"
 	instance_type = "t2.micro"
 	key_name        = "${var.aws_key_name}"
 	subnet_id = "${aws_subnet.Subnet_main.id}"
@@ -225,5 +229,5 @@ resource "aws_instance" "App_with_Consul_client-1" {
 	Name = "APP1_by_Terraform"
 	}
 	
-	user_data = "${file(var.user_data_dummy_exporter_path1)}"
+	user_data = ""
 }
