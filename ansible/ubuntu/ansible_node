@@ -1,5 +1,8 @@
 #!/bin/bash
 
+## installing python 2.7 for ansible server to be able to connection
+apt install python -y
+
 ## adding public key for connection ##
 
 # key for RHEL distro path
