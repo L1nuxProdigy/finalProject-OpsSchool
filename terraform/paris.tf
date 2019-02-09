@@ -16,6 +16,8 @@ variable "RHEL_image" {default = "ami-5026902d"}
 
 ### Machines Configurations Scripts ###
 variable "ansible_server_user_data_script" {}
+variable "ubuntu_ansible_server_user_data_script" {}
+
 
 ##################################################################################
 # PROVIDERS
@@ -244,5 +246,5 @@ resource "aws_instance" "Free_Machine" {
 	Name = "FREE-TerraBuild"
 	}
 	
-	user_data = ""
+	user_data = "${file(var.ubuntu_ansible_server_user_data_script)}"
 }

@@ -15,8 +15,9 @@ cat $TERRAFORM_VARIABLE_FILE | head -3 > $TERRAFORM_VARIABLE_TEMP_FILE
 
 ### adding the data to the "tempVars" file
 
-# dummy exporter
+# Ansible
 echo 'ansible_server_user_data_script = "'$ANSIBLE_PATH/initial_call_for_server'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
+echo 'ubuntu_ansible_server_user_data_script = "'$ANSIBLE_PATH/ubuntu/initial_call_for_server'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
 
 
 
