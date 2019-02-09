@@ -8,6 +8,7 @@ ANSIBLE_PATH=$REPO_HOME_FOLDER/'ansible'
 
 ## cloning git repo
 cd $USER_HOME_FOLDER
+sudo yum install git -y
 git clone https://github.com/L1nuxProdigy/finalProject-OpsSchool
 
 ## installing consul
