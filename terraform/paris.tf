@@ -218,7 +218,7 @@ resource "aws_security_group" "SecurityGroup_main" {
 ##################################################################################
 
 resource "aws_instance" "Ansible_Server" {
-	ami           = "${var.ubuntu_image}"
+	ami           = "${var.RHEL_image}"
 	instance_type = "t2.micro"
 	key_name        = "${var.aws_key_name}"
 	subnet_id = "${aws_subnet.Subnet_main.id}"
