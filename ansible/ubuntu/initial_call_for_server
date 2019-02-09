@@ -5,13 +5,14 @@
 USER_HOME_FOLDER='/home/ubuntu'
 REPO_HOME_FOLDER=$USER_HOME_FOLDER'/finalProject-OpsSchool'
 ANSIBLE_PATH=$REPO_HOME_FOLDER/'ansible/ubuntu'
+CONSUL_PATH=$REPO_HOME_FOLDER/'consul/ubuntu'
 
 ## cloning git repo
 cd $USER_HOME_FOLDER
 git clone https://github.com/L1nuxProdigy/finalProject-OpsSchool
 
 ## installing consul
-$ANSIBLE_PATH/'consul_server'
+$CONSUL_PATH/'consul_server'
 
 ## installing ansible server
 $ANSIBLE_PATH/'ansible_server'

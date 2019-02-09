@@ -2,22 +2,35 @@
 
 ###Setting some in scripts vars for later easier edit
 
-# foundations path
+## foundations path
 REPO_HOME_FOLDER='/home/ubuntu/finalProject-OpsSchool'
 TERRAFORM_VARIABLE_FILE=$REPO_HOME_FOLDER/'terraform/vars'
 TERRAFORM_VARIABLE_TEMP_FILE=$REPO_HOME_FOLDER/'terraform/tempVars'
 
-# user data path
+## user data path
+
+# Ansible Path #
 ANSIBLE_PATH=$REPO_HOME_FOLDER/'ansible'
+ANSIBLE_UBUNTU_SERVER=$ANSIBLE_PATH/'ubuntu/initial_call_for_server'
+ANSIBLE_RHEL_SERVER=$ANSIBLE_PATH/'RHEL/initial_call_for_server'
+
+# Consul Path #
+CONSUL_PATH=$REPO_HOME_FOLDER/'consul'
+CONSUL_CLIENT_UBUNTU_PATH=$CONSUL_PATH/'ubuntu/consul_install_client'
+
+# blabla #
 
 ### setting a "tempVars" file to replace the original "vars" file
 cat $TERRAFORM_VARIABLE_FILE | head -3 > $TERRAFORM_VARIABLE_TEMP_FILE
 
 ### adding the data to the "tempVars" file
 
-# Ansible
-echo 'ansible_server_user_data_script = "'$ANSIBLE_PATH/RHEL/initial_call_for_server'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
-echo 'ubuntu_ansible_server_user_data_script = "'$ANSIBLE_PATH/ubuntu/initial_call_for_server'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
+# Ansible #
+echo 'rhel_ansible_server_user_data_script = "'$ANSIBLE_RHEL_SERVER'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
+echo 'ubuntu_ansible_server_user_data_script = "'$ANSIBLE_UBUNTU_SERVER'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
+
+# Temp #
+echo 'ubuntu_consul_client = "'$CONSUL_CLIENT_UBUNTU_PATH'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
 
 
 

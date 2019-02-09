@@ -15,8 +15,13 @@ variable "ubuntu_image" {default = "ami-08182c55a1c188dee"}
 variable "RHEL_image" {default = "ami-5026902d"}
 
 ### Machines Configurations Scripts ###
-variable "ansible_server_user_data_script" {}
+
+# Ansible
+variable "rhel_ansible_server_user_data_script" {}
 variable "ubuntu_ansible_server_user_data_script" {}
+
+# Temp
+variable "ubuntu_consul_client" {}
 
 
 ##################################################################################
@@ -219,7 +224,7 @@ resource "aws_security_group" "SecurityGroup_main" {
 # EC2 Resources
 ##################################################################################
 
-resource "aws_instance" "Ansible_Server" {
+resource "aws_instance" "Ansible_and_Consul_Server" {
 	ami           = "${var.ubuntu_image}"
 	instance_type = "t2.micro"
 	key_name        = "${var.aws_key_name}"
@@ -246,5 +251,5 @@ resource "aws_instance" "Free_Machine" {
 	Name = "FREE-TerraBuild"
 	}
 	
-	user_data = ""
+	user_data = "${file(var.ubuntu_consul_client)}"
 }
