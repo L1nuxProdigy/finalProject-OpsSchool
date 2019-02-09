@@ -220,7 +220,7 @@ resource "aws_security_group" "SecurityGroup_main" {
 ##################################################################################
 
 resource "aws_instance" "Ansible_Server" {
-	ami           = "${var.RHEL_image}"
+	ami           = "${var.ubuntu_image}"
 	instance_type = "t2.micro"
 	key_name        = "${var.aws_key_name}"
 	subnet_id = "${aws_subnet.Subnet_main.id}"
@@ -231,7 +231,7 @@ resource "aws_instance" "Ansible_Server" {
 	Name = "Ansible_Server-TerraBuild"
 	}
 	
-	user_data = "${file(var.ansible_server_user_data_script)}"
+	user_data = "${file(var.ubuntu_ansible_server_user_data_script)}"
 }
 
 resource "aws_instance" "Free_Machine" {
@@ -246,5 +246,5 @@ resource "aws_instance" "Free_Machine" {
 	Name = "FREE-TerraBuild"
 	}
 	
-	user_data = "${file(var.ubuntu_ansible_server_user_data_script)}"
+	user_data = ""
 }

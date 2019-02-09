@@ -2,5 +2,5 @@
 terraform destroy -var-file='vars' -target aws_instance.Ansible_Server
 terraform destroy -var-file='vars' -target aws_instance.Free_Machine
 
-## test
-terraform destroy -var-file='vars' -target {aws_instance.Free_Machine,aws_instance.Ansible_Server}
+## destroy 2 instances
+terraform destroy -var-file='vars' -target aws_instance.Ansible_Server -target aws_instance.Free_Machine
