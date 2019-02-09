@@ -226,7 +226,7 @@ resource "aws_instance" "Ansible_Server" {
 	iam_instance_profile = "${aws_iam_instance_profile.Consul_IAM_Profile.name}"
 	
 	tags = {
-	Name = "Ansible_Server- TerraBuild"
+	Name = "Ansible_Server-TerraBuild"
 	}
 	
 	user_data = "${file(var.ansible_server_user_data_script)}"
