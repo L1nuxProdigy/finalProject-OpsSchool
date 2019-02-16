@@ -36,7 +36,7 @@ echo 'ubuntu_ansible_server_user_data_script = "'$ANSIBLE_UBUNTU_SERVER'"' >> $T
 
 # Temp #
 echo 'jenkins_server_user_data_script = "'$JENKINS_SERVER'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
-echo 'jenkins_another_user_data_script = "'$JENKINS_SERVER'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
+echo 'jenkins_another_user_data_script = "'$JENKINS_ANOTHER'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
 
 
 
