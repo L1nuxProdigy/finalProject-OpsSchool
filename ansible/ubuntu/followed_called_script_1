@@ -12,7 +12,7 @@ CONSUL_PATH=$REPO_HOME_FOLDER/'consul/ubuntu'
 sed -i 's/#host_key_checking = False/host_key_checking = False/g' /etc/ansible/ansible.cfg
 
 ## finding jenkins-master ip
-while [[ $(consul members | head -n3 | wc -l | bc) < 3 ]]; do
+while [[ $(consul members | head -n3 | wc -l | bc) < 4 ]]; do
         sleep 4
 done
 
