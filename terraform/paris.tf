@@ -22,6 +22,7 @@ variable "ubuntu_ansible_server_user_data_script" {}
 
 # Jenkins
 variable "jenkins_server_user_data_script" {}
+variable "jenkins_another_user_data_script" {}
 
 
 ##################################################################################
@@ -245,7 +246,7 @@ resource "aws_instance" "Ansible_and_Consul_Server" {
 	user_data = "${file(var.ubuntu_ansible_server_user_data_script)}"
 }
 
-resource "aws_instance" "Free_Machine" {
+resource "aws_instance" "Jenkins_Server" {
 	ami           = "${var.ubuntu_image}"
 	instance_type = "t2.micro"
 	key_name        = "${var.aws_key_name}"
@@ -254,8 +255,23 @@ resource "aws_instance" "Free_Machine" {
 	iam_instance_profile = "${aws_iam_instance_profile.Consul_IAM_Profile.name}"
 	
 	tags = {
-	Name = "FREE-TerraBuild"
+	Name = "Jenkins_Server-TerraBuild"
 	}
 	
 	user_data = "${file(var.jenkins_server_user_data_script)}"
+}
+
+resource "aws_instance" "Jenkins_Server2" {
+	ami           = "${var.ubuntu_image}"
+	instance_type = "t2.micro"
+	key_name        = "${var.aws_key_name}"
+	subnet_id = "${aws_subnet.Subnet_main.id}"
+	vpc_security_group_ids = ["${aws_security_group.SecurityGroup_main.id}"]
+	iam_instance_profile = "${aws_iam_instance_profile.Consul_IAM_Profile.name}"
+	
+	tags = {
+	Name = "Jenkins2-TerraBuild"
+	}
+	
+	user_data = "${file(var.jenkins_another_user_data_script)}"
 }
