@@ -25,6 +25,14 @@ apt-get update
 apt-get install -y kubelet kubeadm kubectl
 apt-mark hold kubelet kubeadm kubectl
 
+# running kubernetes some based on the comments below
+kubeadm init --ignore-preflight-errors all
+
+mkdir -p /home/ubuntu/.kube
+sudo cp -i /etc/kubernetes/admin.conf /home/ubuntu/.kube/config
+sudo chown 1000:1000 /home/ubuntu/.kube/config
+
+
 
 # more requirements
 

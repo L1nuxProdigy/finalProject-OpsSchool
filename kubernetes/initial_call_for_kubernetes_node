@@ -7,6 +7,7 @@ REPO_HOME_FOLDER=$USER_HOME_FOLDER'/finalProject-OpsSchool'
 ANSIBLE_PATH=$REPO_HOME_FOLDER/'ansible/ubuntu'
 ANSIBLE_PLAYBOOK_PATH=$ANSIBLE_PATH/../'playbooks'
 CONSUL_PATH=$REPO_HOME_FOLDER/'consul/ubuntu'
+KUBERNETES_PATH=$REPO_HOME_FOLDER/'kubernetes'
 
 ## cloning git repo
 cd $USER_HOME_FOLDER
