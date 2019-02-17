@@ -13,7 +13,7 @@ cd $USER_HOME_FOLDER
 git clone https://github.com/L1nuxProdigy/finalProject-OpsSchool
 
 ## installing consul
-$CONSUL_PATH/'consul_client_kubernetes_node'
+$CONSUL_PATH/'consul_client_kubernetes_server'
 
 ## adding public key so jenkins master can connect
 $ANSIBLE_PATH/'ansible_node'

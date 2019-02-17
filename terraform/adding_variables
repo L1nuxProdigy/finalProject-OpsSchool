@@ -34,14 +34,17 @@ cat $TERRAFORM_VARIABLE_FILE | head -3 > $TERRAFORM_VARIABLE_TEMP_FILE
 ### adding the data to the "tempVars" file
 
 # Ansible #
+echo "### Ansible ###" >> $TERRAFORM_VARIABLE_TEMP_FILE
 echo 'rhel_ansible_server_user_data_script = "'$ANSIBLE_RHEL_SERVER'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
 echo 'ubuntu_ansible_server_user_data_script = "'$ANSIBLE_UBUNTU_SERVER'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
 
 # Kubernetes #
+echo -e "\n### Kubernetes ###\n" >> $TERRAFORM_VARIABLE_TEMP_FILE
 echo 'kubernetes_server_user_data_script = "'$KUBERNETES_SERVER'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
 echo 'kubernetes_node_user_data_script = "'$KUBERNETES_NODE'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
 
 # Temp #
+echo -e "\n### Temp ###\n" >> $TERRAFORM_VARIABLE_TEMP_FILE
 echo 'jenkins_server_user_data_script = "'$JENKINS_SERVER'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
 echo 'jenkins_another_user_data_script = "'$JENKINS_ANOTHER'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
 
