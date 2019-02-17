@@ -11,21 +11,35 @@ CONSUL_PATH=$REPO_HOME_FOLDER/'consul/ubuntu'
 ## disable ansible host key chekcing
 sed -i 's/#host_key_checking = False/host_key_checking = False/g' /etc/ansible/ansible.cfg
 
-## finding jenkins-master ip
+## Waiting for Consul Clients to be up
 while [[ $(consul members | head -n3 | wc -l | bc) < 4 ]]; do
         sleep 4
 done
 
+#### Jenkins ####
+
+## Finding the Jenkins Master IP and editing it to the hosts.yml file
 x=$(dig @127.0.0.1 -p 8600 consul-jenkins-master.node.consul +noall +answer | tail -n1)
 x2=${x# }
 x3=$(echo $x2 | cut -d ' ' -f5)
-
-## configuring the hosts.yml file with ip's to the machines
 sed -i 's/jenkins_master_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/hosts.yml
 
+## Finding the Jenkins Master "Another" IP and editing it to the hosts.yml file
 x=$(dig @127.0.0.1 -p 8600 consul-jenkins-another.node.consul +noall +answer | tail -n1)
 x2=${x# }
 x3=$(echo $x2 | cut -d ' ' -f5)
+sed -i 's/jenkins_another_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/hosts.yml
 
-## configuring the hosts.yml file with ip's to the machines
+#### K8S ####
+
+## Finding the Kubernetes Master IP and editing it to the hosts.yml file
+x=$(dig @127.0.0.1 -p 8600 consul-kubernetes-master.node.consul +noall +answer | tail -n1)
+x2=${x# }
+x3=$(echo $x2 | cut -d ' ' -f5)
+sed -i 's/kubernetes_master_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/hosts.yml
+
+## Finding the Kubernetes Node IP and editing it to the hosts.yml file
+x=$(dig @127.0.0.1 -p 8600 consul-kubernetes-node.node.consul +noall +answer | tail -n1)
+x2=${x# }
+x3=$(echo $x2 | cut -d ' ' -f5)
 sed -i 's/jenkins_another_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/hosts.yml

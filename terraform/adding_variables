@@ -18,12 +18,15 @@ ANSIBLE_RHEL_SERVER=$ANSIBLE_PATH/'RHEL/initial_call_for_server'
 CONSUL_PATH=$REPO_HOME_FOLDER/'consul'
 CONSUL_CLIENT_UBUNTU_PATH=$CONSUL_PATH/'ubuntu'
 
-# Jenkins #
+# Jenkins Path #
 JENKINS_PATH=$REPO_HOME_FOLDER/'jenkins'
 JENKINS_SERVER=$JENKINS_PATH/'initial_call_for_server'
 JENKINS_ANOTHER=$JENKINS_PATH/'initial_call_for_another'
 
-# blabla #
+# Kubernetes Path #
+KUBERNETES_PATH=$REPO_HOME_FOLDER/'kubernetes'
+KUBERNETES_SERVER=$KUBERNETES_PATH/'initial_call_for_kubernetes_server'
+KUBERNETES_NODE=$KUBERNETES_PATH/'initial_call_for_kubernetes_node'
 
 ### setting a "tempVars" file to replace the original "vars" file
 cat $TERRAFORM_VARIABLE_FILE | head -3 > $TERRAFORM_VARIABLE_TEMP_FILE
@@ -33,6 +36,10 @@ cat $TERRAFORM_VARIABLE_FILE | head -3 > $TERRAFORM_VARIABLE_TEMP_FILE
 # Ansible #
 echo 'rhel_ansible_server_user_data_script = "'$ANSIBLE_RHEL_SERVER'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
 echo 'ubuntu_ansible_server_user_data_script = "'$ANSIBLE_UBUNTU_SERVER'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
+
+# Kubernetes #
+echo 'kubernetes_server_user_data_script = "'$KUBERNETES_SERVER'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
+echo 'kubernetes_node_user_data_script = "'$KUBERNETES_NODE'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
 
 # Temp #
 echo 'jenkins_server_user_data_script = "'$JENKINS_SERVER'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
