@@ -2,9 +2,16 @@
 
 # running kubernetes some based on the comments below
 kubeadm init --apiserver-advertise-address=$(curl "http://169.254.169.254/latest/meta-data/local-ipv4") --ignore-preflight-errors all
+
+#for regular user
 runuser -l ubuntu -c 'mkdir -p /home/ubuntu/.kube'
 sudo cp -i /etc/kubernetes/admin.conf /home/ubuntu/.kube/config
 sudo chown 1000:1000 /home/ubuntu/.kube/config
+
+#for root user
+export KUBECONFIG=/etc/kubernetes/admin.conf
+
+
 
 # adding weave network plugin
 sudo -u ubuntu bash << EOF
@@ -34,4 +41,19 @@ EOF
 # 5. some commands
 	# kubectl get pods --all-namespaces
 	# kubectl get nodes
+	
+# 6. more for kubeadm init
+	# --pod-network-cidr
+	
+# 7. label the node
+	# kubectl label nodes <your-node-name> disktype=ssd
+	
+# 8. getting worker node info
+	# x=$(kubectl get nodes | tail -n1)
+	# x2=${x# }
+	# x3=$(echo $x2 | cut -d ' ' -f1)
+	# kubectl label nodes $x3 Destiny=SpreeApp
+
+# 9. applying the yml
+	# kubectl create -f ymlfile.yml
 	

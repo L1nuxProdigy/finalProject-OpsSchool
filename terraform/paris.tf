@@ -211,13 +211,20 @@ resource "aws_security_group" "SecurityGroup_main" {
 		protocol    = "TCP"
 		cidr_blocks = ["0.0.0.0/0"]
 		description = "Consul Web"
-	}	
+	}
 	ingress {
 		from_port   = 8080
 		to_port     = 8080
 		protocol    = "TCP"
 		cidr_blocks = ["0.0.0.0/0"]
 		description = "Jenkins"
+	}
+	ingress {
+		from_port   = 6443
+		to_port     = 6443
+		protocol    = "TCP"
+		cidr_blocks = ["0.0.0.0/0"]
+		description = "K8s cluster join"
 	}
 	egress {
 		from_port       = 0
