@@ -29,6 +29,11 @@ kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl versio
 # 4. need to check this kubeadm join 10.0.1.41:6443 --token dm815q.f89ffv9io2nufojq --discovery-token-ca-cert-hash sha256:331722f0937e96dee787472aafe2d98faa6059abb321ba2263192f4a5c213bd5
 	# kubeadm token list
 	# openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | \openssl dgst -sha256 -hex | sed 's/^.* //'
+	# x=$(kubeadm token list | tail -n1)
+	# x2=${x# }
+	# x3=$(echo $x2 | cut -d ' ' -f1)
+	# x4=$(openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | \openssl dgst -sha256 -hex | sed 's/^.* //')
+	# echo kubeadm join $(curl "http://169.254.169.254/latest/meta-data/local-ipv4"):6443 --token $x3 --discovery-token-ca-cert-hash sha256:$x4
 
 # 5. some commands
 	# kubectl get pods --all-namespaces

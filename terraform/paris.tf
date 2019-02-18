@@ -11,7 +11,8 @@ variable "aws_key_name" {
 }
 
 ### AMI Vars ###
-variable "ubuntu_image" {default = "ami-08182c55a1c188dee"}
+variable "ubuntu_image_18-04" {default = "ami-08182c55a1c188dee"}
+variable "ubuntu_image_16-04" {default = "ami-075b44448d2276521"}
 variable "RHEL_image" {default = "ami-5026902d"}
 
 ### Machines Configurations Scripts ###
@@ -244,7 +245,7 @@ resource "aws_security_group" "SecurityGroup_main" {
 ##################################################################################
 
 resource "aws_instance" "Ansible_and_Consul_Server" {
-	ami           = "${var.ubuntu_image}"
+	ami           = "${var.ubuntu_image_18-04}"
 	instance_type = "t2.micro"
 	key_name        = "${var.aws_key_name}"
 	subnet_id = "${aws_subnet.Subnet_main.id}"
@@ -259,7 +260,7 @@ resource "aws_instance" "Ansible_and_Consul_Server" {
 }
 
 resource "aws_instance" "Kubernetes_Server" {
-	ami           = "${var.ubuntu_image}"
+	ami           = "${var.ubuntu_image_16-04}"
 	instance_type = "t2.micro"
 	key_name        = "${var.aws_key_name}"
 	subnet_id = "${aws_subnet.Subnet_main.id}"
@@ -274,7 +275,7 @@ resource "aws_instance" "Kubernetes_Server" {
 }
 
 resource "aws_instance" "Kubernetes_Node" {
-	ami           = "${var.ubuntu_image}"
+	ami           = "${var.ubuntu_image_16-04}"
 	instance_type = "t2.micro"
 	key_name        = "${var.aws_key_name}"
 	subnet_id = "${aws_subnet.Subnet_main.id}"
