@@ -13,7 +13,7 @@ sed -i 's/#host_key_checking = False/host_key_checking = False/g' /etc/ansible/a
 
 ## Waiting for Consul Clients to be up
 while [[ $(consul members | head -n4 | wc -l | bc) < 4 ]]; do
-        sleep 4
+        sleep 2
 done
 
 #### Jenkins ####
@@ -39,6 +39,11 @@ x3=$(echo $x2 | cut -d ' ' -f5)
 sed -i 's/kubernetes_master_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/hosts.yml
 sed -i 's/kubernetes_master_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/vars.yml
 
+while ( nc -zv $x3 22 2>&1 | grep -q refused ); do
+        sleep 2
+		echo refused >> /home/ubuntu/ssh_health_check
+done
+
 ## Finding the Kubernetes Node IP and editing it to the hosts.yml file
 x=$(dig @127.0.0.1 -p 8600 consul-kubernetes-node.node.consul +noall +answer | tail -n1)
 x2=${x# }
@@ -48,6 +53,7 @@ sed -i 's/kubernetes_node_one_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/vars.ym
 
 #### RUNNING PLAYBOOKS, checking ssh on the remote machines first ####
 while ( nc -zv $x3 22 2>&1 | grep -q refused ); do
-        sleep 4
+        sleep 2
+		echo refused >> /home/ubuntu/ssh_health_check
 done
 ansible-playbook -i $ANSIBLE_PLAYBOOK_PATH/hosts.yml $ANSIBLE_PLAYBOOK_PATH/kubernetes_play.yml >somthing
