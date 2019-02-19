@@ -1,0 +1,5 @@
+---
+- name: kubernetes setting pod through server
+  hosts: kubernetes_server
+  roles:
+    - kubernetes_pods_test
