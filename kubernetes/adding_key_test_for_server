@@ -26,7 +26,7 @@ roN6fcI67xrIKKM0WgT8uU2PaWXuBWUjnjryG3dD/baPLQT9EvSeZRxjN0Lga7RE
 +WkUUQKBgQDbjbfAZosjmhMRDsEAsP5FY169hZ0tYwXmt+UyVqKjDGuCO4yhrM92
 g8KaG7sfxhMybQw5N9a4JWvqScWRJRmFnl8E51eTSqVK7dlybFaSWw8URJDCk2ti
 TGWH+fm5UNhQoslsMLTAUxJ3Q064WnS3QZ5eA6bOQLMB3gcZqaCL5Q==
------END RSA PRIVATE KEY-----" > /home/ubuntu/.ssh/id_rsa_kubernetes
+-----END RSA PRIVATE KEY-----" > /home/ubuntu/.ssh/id_rsa
 
 sudo echo "-----BEGIN RSA PRIVATE KEY-----
 MIIEpAIBAAKCAQEAtr4uSJKSN7j05zZB/pcG3axzp52DAKImfPsKCb8LJDRVefBm
@@ -54,4 +54,4 @@ roN6fcI67xrIKKM0WgT8uU2PaWXuBWUjnjryG3dD/baPLQT9EvSeZRxjN0Lga7RE
 +WkUUQKBgQDbjbfAZosjmhMRDsEAsP5FY169hZ0tYwXmt+UyVqKjDGuCO4yhrM92
 g8KaG7sfxhMybQw5N9a4JWvqScWRJRmFnl8E51eTSqVK7dlybFaSWw8URJDCk2ti
 TGWH+fm5UNhQoslsMLTAUxJ3Q064WnS3QZ5eA6bOQLMB3gcZqaCL5Q==
------END RSA PRIVATE KEY-----" > /root/.ssh/id_rsa_kubernetes
+-----END RSA PRIVATE KEY-----" > /root/.ssh/id_rsa
