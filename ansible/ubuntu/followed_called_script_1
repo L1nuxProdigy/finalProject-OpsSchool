@@ -46,5 +46,8 @@ x3=$(echo $x2 | cut -d ' ' -f5)
 sed -i 's/kubernetes_node_one_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/hosts.yml
 sed -i 's/kubernetes_node_one_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/vars.yml
 
-#### RUNNING PLAYBOOKS ####
-ansible-playbook -i $ANSIBLE_PLAYBOOK_PATH/hosts.yml $ANSIBLE_PLAYBOOK_PATH/kubernetes_play.yml > somthing
+#### RUNNING PLAYBOOKS, checking ssh on the remote machines first ####
+while ( nc -zv $x3 22 2>&1 | grep -q refused ); do
+        sleep 4
+done
+ansible-playbook -i $ANSIBLE_PLAYBOOK_PATH/hosts.yml $ANSIBLE_PLAYBOOK_PATH/kubernetes_play.yml
