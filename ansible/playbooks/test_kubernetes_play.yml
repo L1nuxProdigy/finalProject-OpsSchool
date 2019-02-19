@@ -16,6 +16,6 @@
     - kubernetes_node
 
 - name: kubernetes setting pod through server
-  hosts: kubernetes_server
+  hosts: kubernetes_master
   roles:
-    - kubernetes_pods_test
+    - kubernetes_pods
