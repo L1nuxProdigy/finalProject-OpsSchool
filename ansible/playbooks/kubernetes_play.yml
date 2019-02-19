@@ -1,0 +1,14 @@
+---
+- hosts: kubernetes_machines
+  roles:
+    - kubernetes_docker
+    - kubernetes_common
+ 
+- hosts: kubernetes_master
+  roles:
+    - kubernetes_server
+
+- hosts: kubernetes_node
+  roles:
+    - kubernetes_node
+    

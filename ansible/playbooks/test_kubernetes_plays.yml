@@ -1,0 +1,4 @@
+---
+- hosts: kubernetes_machines
+  roles:
+    - kubernetes_docker    

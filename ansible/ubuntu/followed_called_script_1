@@ -37,6 +37,7 @@ x=$(dig @127.0.0.1 -p 8600 consul-kubernetes-master.node.consul +noall +answer |
 x2=${x# }
 x3=$(echo $x2 | cut -d ' ' -f5)
 sed -i 's/kubernetes_master_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/hosts.yml
+sed -i 's/kubernetes_master_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/vars.yml
 
 ## Finding the Kubernetes Node IP and editing it to the hosts.yml file
 x=$(dig @127.0.0.1 -p 8600 consul-kubernetes-node.node.consul +noall +answer | tail -n1)
