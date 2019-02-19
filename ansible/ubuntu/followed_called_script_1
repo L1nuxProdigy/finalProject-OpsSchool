@@ -44,3 +44,4 @@ x=$(dig @127.0.0.1 -p 8600 consul-kubernetes-node.node.consul +noall +answer | t
 x2=${x# }
 x3=$(echo $x2 | cut -d ' ' -f5)
 sed -i 's/kubernetes_node_one_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/hosts.yml
+sed -i 's/kubernetes_node_one_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/vars.yml

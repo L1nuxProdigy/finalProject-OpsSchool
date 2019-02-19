@@ -13,10 +13,24 @@
       path: "{{ lookup('env','HOME') }}/.kube"
       state: directory
 
+  - name: K8S | Install Master | Copy admin.conf file to /.kube/config
+    shell: "cp -i /etc/kubernetes/admin.conf {{ lookup('env','HOME') }}/.kube/config"
+    become: true
+    become_method: sudo
 
+  - name: K8S | Install Master | Change ownership on /.kube/config
+    file:
+      path: "{{ lookup('env','HOME') }}/.kube/config"
+      owner: ubuntu
+      group: ubuntu
+    become: true
+    become_method: sudo
 
   - name: K8S | Install Master | Install pod network
     shell: kubectl apply -f https://docs.projectcalico.org/v3.3/getting-started/kubernetes/installation/hosted/rbac-kdd.yaml
 
   - name: K8S | Install Master | Install pod network
     shell: kubectl apply -f https://docs.projectcalico.org/v3.3/getting-started/kubernetes/installation/hosted/kubernetes-datastore/calico-networking/1.7/calico.yaml
+    
+  - name: K8S | Install Master | Install pod network
+    shell: kubectl label nodes {{ k8s_node_ip }} Destiny=SpreeApp
