@@ -10,19 +10,17 @@
 
   - name: K8S | Install Master | Create .kube directory
     file:
-      path: "{{ kube_path_ubuntu_user }}"
+      path: "{{ lookup('env','HOME') }}/.kube"
       state: directory
-    become: true
-    become_user: ubuntu
 
   - name: K8S | Install Master | Copy admin.conf file to /.kube/config
-    shell: "cp -i /etc/kubernetes/admin.conf {{ kube_path_ubuntu_user }}/config"
+    shell: "cp -i /etc/kubernetes/admin.conf {{ lookup('env','HOME') }}/.kube/config"
     become: true
     become_method: sudo
 
   - name: K8S | Install Master | Change ownership on /.kube/config
     file:
-      path: "{{ kube_path_ubuntu_user }}/config"
+      path: "{{ lookup('env','HOME') }}/.kube/config"
       owner: ubuntu
       group: ubuntu
     become: true
@@ -30,10 +28,6 @@
 
   - name: K8S | Install Master | Install pod network
     shell: kubectl apply -f https://docs.projectcalico.org/v3.3/getting-started/kubernetes/installation/hosted/rbac-kdd.yaml
-    become: true
-    become_user: ubuntu
 
   - name: K8S | Install Master | Install pod network
     shell: kubectl apply -f https://docs.projectcalico.org/v3.3/getting-started/kubernetes/installation/hosted/kubernetes-datastore/calico-networking/1.7/calico.yaml
-    become: true
-    become_user: ubuntu
