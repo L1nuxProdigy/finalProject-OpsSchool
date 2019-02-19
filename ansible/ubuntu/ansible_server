@@ -36,3 +36,5 @@ roN6fcI67xrIKKM0WgT8uU2PaWXuBWUjnjryG3dD/baPLQT9EvSeZRxjN0Lga7RE
 g8KaG7sfxhMybQw5N9a4JWvqScWRJRmFnl8E51eTSqVK7dlybFaSWw8URJDCk2ti
 TGWH+fm5UNhQoslsMLTAUxJ3Q064WnS3QZ5eA6bOQLMB3gcZqaCL5Q==
 -----END RSA PRIVATE KEY-----" | tee -a /home/ubuntu/.ssh/id_rsa_ansible /root/.ssh/id_rsa_ansible
+
+chmod 400 /root/.ssh/id_rsa_ansible
