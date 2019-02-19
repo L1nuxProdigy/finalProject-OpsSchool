@@ -176,7 +176,7 @@ resource "aws_security_group" "SecurityGroup_main" {
 		to_port     = 3000
 		protocol    = "TCP"
 		cidr_blocks = ["0.0.0.0/0"]
-		description = "Grafana"
+		description = "Grafana and Spree"
       }
 	ingress {
 		from_port   = 9200

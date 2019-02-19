@@ -47,4 +47,4 @@ sed -i 's/kubernetes_node_one_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/hosts.y
 sed -i 's/kubernetes_node_one_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/vars.yml
 
 #### RUNNING PLAYBOOKS ####
-ansible-playbook -i $ANSIBLE_PLAYBOOK_PATH/'hosts.yml' $ANSIBLE_PLAYBOOK_PATH/'kubernetes_play.yml'
+ansible-playbook -i $ANSIBLE_PLAYBOOK_PATH/hosts.yml $ANSIBLE_PLAYBOOK_PATH/kubernetes_play.yml
