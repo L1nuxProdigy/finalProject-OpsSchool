@@ -6,4 +6,9 @@
  
 - hosts: kubernetes_master
   roles:
-    - kubernetes_server
+    - kubernetes_server_test
+
+- hosts: kubernetes_node
+  roles:
+    - kubernetes_node
+    

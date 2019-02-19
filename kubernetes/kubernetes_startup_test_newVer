@@ -52,5 +52,5 @@ kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl versio
 	# kubectl label nodes $x3 Destiny=SpreeApp
 
 # 9. applying the yml
-	# kubectl create -f ymlfile.yml
+	# kubectl create -f pod_test.yml
 	
