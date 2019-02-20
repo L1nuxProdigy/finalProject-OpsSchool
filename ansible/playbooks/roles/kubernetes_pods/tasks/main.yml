@@ -5,6 +5,10 @@
  
   - name: K8S | Install Master | Install pod network
     shell: kubectl label nodes {{ k8s_node_ip }} Destiny=SpreeApp
+    become: true
+    become_user: ubuntu
     
   - name: K8S | Install Master | Install pod network
     shell: kubectl create -f {{ pod_deployment_path }}
+    become: true
+    become_user: ubuntu
