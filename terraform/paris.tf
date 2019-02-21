@@ -219,14 +219,14 @@ resource "aws_security_group" "SecurityGroup_main" {
 		protocol    = "TCP"
 		cidr_blocks = ["0.0.0.0/0"]
 		description = "Jenkins"
+	}
 	ingress {
 		from_port   = 30001
 		to_port     = 30001
 		protocol    = "TCP"
 		cidr_blocks = ["0.0.0.0/0"]
-		description = "Kubernetes Expose Service"
+		description = "K8s Expose Service"
       }
-	}
 	ingress {
 		from_port   = 6443
 		to_port     = 6443
