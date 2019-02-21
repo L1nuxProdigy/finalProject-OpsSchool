@@ -2,5 +2,6 @@
 kubeadm_token: "gqv3y0.91c3dhvt24c2s63h"
 k8s_master_ip: kubernetes_master_enter_here
 k8s_node_ip: kubernetes_node_one_enter_here
-pod_deployment_path: /home/ubuntu/finalProject-OpsSchool/kubernetes/replication_controller_test.yml
+replication_controller_deployment_path: /home/ubuntu/finalProject-OpsSchool/kubernetes/replication_controller.yml
+svc_deployment_path: /home/ubuntu/finalProject-OpsSchool/kubernetes/service.yml
 kube_path_ubuntu_user: /home/ubuntu/.kube

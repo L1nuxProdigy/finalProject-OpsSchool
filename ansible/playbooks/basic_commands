@@ -15,6 +15,12 @@ kubectl delete pods "pod name"
 # to join a node
 kubeadm join --token=gqv3y0.91c3dhvt24c2s63h --discovery-token-unsafe-skip-ca-verification "server ip":6443 --node-name="node name"
 
+# to add a configuration
+kubectl create -f file.yml
+
 # validation commands
 kubectl get pods
 kubectl describe pods
+kubectl describe pods | grep app
+kubectl get svc
+kubectl describe svc

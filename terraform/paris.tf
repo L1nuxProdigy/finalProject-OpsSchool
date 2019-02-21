@@ -176,7 +176,7 @@ resource "aws_security_group" "SecurityGroup_main" {
 		to_port     = 3000
 		protocol    = "TCP"
 		cidr_blocks = ["0.0.0.0/0"]
-		description = "Grafana and Spree"
+		description = "Grafana"
       }
 	ingress {
 		from_port   = 9200
@@ -219,6 +219,13 @@ resource "aws_security_group" "SecurityGroup_main" {
 		protocol    = "TCP"
 		cidr_blocks = ["0.0.0.0/0"]
 		description = "Jenkins"
+	ingress {
+		from_port   = 30001
+		to_port     = 30001
+		protocol    = "TCP"
+		cidr_blocks = ["0.0.0.0/0"]
+		description = "Kubernetes Expose Service"
+      }
 	}
 	ingress {
 		from_port   = 6443

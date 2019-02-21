@@ -8,7 +8,12 @@
     become: true
     become_user: ubuntu
     
-  - name: K8S | Install Master | Install pod network
+  - name: K8S | deploy replication controller | Install pod network
+    shell: kubectl create -f {{ replication_controller_deployment_path }}
+    become: true
+    become_user: ubuntu
+
+  - name: K8S | deploy a network service | Install pod network
     shell: kubectl create -f {{ pod_deployment_path }}
     become: true
     become_user: ubuntu
