@@ -14,6 +14,6 @@
     become_user: ubuntu
 
   - name: K8S | deploy a network service | Install pod network
-    shell: kubectl create -f {{ pod_deployment_path }}
+    shell: kubectl create -f {{ svc_deployment_path }}
     become: true
     become_user: ubuntu
