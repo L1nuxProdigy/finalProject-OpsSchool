@@ -28,6 +28,10 @@ KUBERNETES_PATH=$REPO_HOME_FOLDER/'kubernetes'
 KUBERNETES_SERVER=$KUBERNETES_PATH/'initial_call_for_kubernetes_server'
 KUBERNETES_NODE=$KUBERNETES_PATH/'initial_call_for_kubernetes_node'
 
+# Spree Path #
+SPREE_PATH=$REPO_HOME_FOLDER/'spree'
+SPREE_USER_DATA=$SPREE_PATH/'spree_test'
+
 ### setting a "tempVars" file to replace the original "vars" file
 cat $TERRAFORM_VARIABLE_FILE | head -3 > $TERRAFORM_VARIABLE_TEMP_FILE
 
@@ -43,13 +47,14 @@ echo -e "\n### Kubernetes ###\n" >> $TERRAFORM_VARIABLE_TEMP_FILE
 echo 'kubernetes_server_user_data_script = "'$KUBERNETES_SERVER'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
 echo 'kubernetes_node_user_data_script = "'$KUBERNETES_NODE'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
 
-# Temp #
+# Spree #
+echo -e "\n### Kubernetes ###\n" >> $TERRAFORM_VARIABLE_TEMP_FILE
+echo 'spree_user_data_script = "'$SPREE_USER_DATA'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
+
+# Jenkins #
 echo -e "\n### Temp ###\n" >> $TERRAFORM_VARIABLE_TEMP_FILE
 echo 'jenkins_server_user_data_script = "'$JENKINS_SERVER'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
 echo 'jenkins_another_user_data_script = "'$JENKINS_ANOTHER'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
-
-
-
 
 ### moving the new data from "tempVars" to "vars"
 cat $TERRAFORM_VARIABLE_TEMP_FILE > $TERRAFORM_VARIABLE_FILE
