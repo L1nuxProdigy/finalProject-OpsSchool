@@ -48,7 +48,7 @@ echo 'kubernetes_server_user_data_script = "'$KUBERNETES_SERVER'"' >> $TERRAFORM
 echo 'kubernetes_node_user_data_script = "'$KUBERNETES_NODE'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
 
 # Spree #
-echo -e "\n### Kubernetes ###\n" >> $TERRAFORM_VARIABLE_TEMP_FILE
+echo -e "\n### Spree ###\n" >> $TERRAFORM_VARIABLE_TEMP_FILE
 echo 'spree_user_data_script = "'$SPREE_USER_DATA'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
 
 # Jenkins #

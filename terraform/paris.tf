@@ -261,7 +261,7 @@ resource "aws_instance" "Spree" {
 	iam_instance_profile = "${aws_iam_instance_profile.Consul_IAM_Profile.name}"
 	
 	tags = {
-	Name = "Ansible_Server-TerraBuild"
+	Name = "Spree-TerraBuild"
 	}
 	
 	user_data = "${file(var.spree_user_data_script)}"
