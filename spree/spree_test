@@ -22,6 +22,20 @@ $ANSIBLE_PATH/'ansible_node'
 
 ## Spree Stuff
 
+# installing docker might need some tweaking
+
+# installing Docker CE Prerequisites
+sudo apt-get update -y
+sudo apt-get install apt-transport-https ca-certificates curl software-properties-common -y
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+# to validate the fingerprint use the following command
+# sudo apt-key fingerprint 0EBFCD88
+
+# Installing Docker CE
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+sudo apt-get install docker-ce -y
+
 
 ## in practive does nothing, for validation only
 chown -R ubuntu $REPO_HOME_FOLDER

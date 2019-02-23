@@ -11,6 +11,6 @@ terraform destroy -var-file='vars' -target aws_instance.Ansible_and_Consul_Serve
 ## destroy 3 instances (K8s)
 terraform destroy -var-file='vars' -target aws_instance.Ansible_and_Consul_Server -target aws_instance.Kubernetes_Server -target aws_instance.Kubernetes_Node
 
-## destroy 2 instances (Spree)
+## destroy instances (Spree)
 terraform destroy -var-file='vars' -target aws_instance.Ansible_and_Consul_Server -target aws_instance.Spree
 
