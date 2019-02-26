@@ -29,7 +29,8 @@ variable "jenkins_another_user_data_script" {}
 variable "kubernetes_server_user_data_script" {}
 variable "kubernetes_node_user_data_script" {}
 
-
+# Spree
+variable "spree_user_data_script" {}
 
 ##################################################################################
 # PROVIDERS
@@ -251,6 +252,21 @@ resource "aws_security_group" "SecurityGroup_main" {
 # EC2 Resources
 ##################################################################################
 
+resource "aws_instance" "Spree" {
+	ami           = "${var.ubuntu_image_18-04}"
+	instance_type = "t2.micro"
+	key_name        = "${var.aws_key_name}"
+	subnet_id = "${aws_subnet.Subnet_main.id}"
+	vpc_security_group_ids = ["${aws_security_group.SecurityGroup_main.id}"]
+	iam_instance_profile = "${aws_iam_instance_profile.Consul_IAM_Profile.name}"
+	
+	tags = {
+	Name = "Spree-TerraBuild"
+	}
+	
+	user_data = "${file(var.spree_user_data_script)}"
+}
+
 resource "aws_instance" "Ansible_and_Consul_Server" {
 	ami           = "${var.ubuntu_image_18-04}"
 	instance_type = "t2.micro"
@@ -264,34 +280,4 @@ resource "aws_instance" "Ansible_and_Consul_Server" {
 	}
 	
 	user_data = "${file(var.ubuntu_ansible_server_user_data_script)}"
-}
-
-resource "aws_instance" "Kubernetes_Server" {
-	ami           = "${var.ubuntu_image_16-04}"
-	instance_type = "t2.micro"
-	key_name        = "${var.aws_key_name}"
-	subnet_id = "${aws_subnet.Subnet_main.id}"
-	vpc_security_group_ids = ["${aws_security_group.SecurityGroup_main.id}"]
-	iam_instance_profile = "${aws_iam_instance_profile.Consul_IAM_Profile.name}"
-	
-	tags = {
-	Name = "K8S_Server-TerraBuild"
-	}
-	
-	user_data = "${file(var.kubernetes_server_user_data_script)}"
-}
-
-resource "aws_instance" "Kubernetes_Node" {
-	ami           = "${var.ubuntu_image_16-04}"
-	instance_type = "t2.micro"
-	key_name        = "${var.aws_key_name}"
-	subnet_id = "${aws_subnet.Subnet_main.id}"
-	vpc_security_group_ids = ["${aws_security_group.SecurityGroup_main.id}"]
-	iam_instance_profile = "${aws_iam_instance_profile.Consul_IAM_Profile.name}"
-	
-	tags = {
-	Name = "K8S_Node-TerraBuild"
-	}
-	
-	user_data = "${file(var.kubernetes_node_user_data_script)}"
 }

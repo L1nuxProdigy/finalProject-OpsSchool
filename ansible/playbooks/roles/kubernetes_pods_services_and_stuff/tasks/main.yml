@@ -3,17 +3,17 @@
     include_vars:
       file: vars.yml
  
-  - name: K8S | Install Master | Install pod network
+  - name: K8S | label the node
     shell: kubectl label nodes {{ k8s_node_ip }} Destiny=SpreeApp
     become: true
     become_user: ubuntu
     
-  - name: K8S | deploy replication controller | Install pod network
+  - name: K8S | deploy replication controller
     shell: kubectl create -f {{ replication_controller_deployment_path }}
     become: true
     become_user: ubuntu
 
-  - name: K8S | deploy a network service | Install pod network
+  - name: K8S | deploy a network service
     shell: kubectl create -f {{ svc_deployment_path }}
     become: true
     become_user: ubuntu
