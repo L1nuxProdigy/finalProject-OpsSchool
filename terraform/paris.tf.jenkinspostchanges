@@ -369,7 +369,8 @@ resource "aws_instance" "Jenkins_Server2" {
 	key_name        = "${var.aws_key_name}"
 	subnet_id = "${aws_subnet.Subnet_main.id}"
 	vpc_security_group_ids = ["${aws_security_group.SecurityGroup_main.id}"]
-	iam_instance_profile = ["${aws_iam_instance_profile.Consul_IAM_Profile.name}","${aws_iam_instance_profile.Jenkins_IAM_Profile.name}"]
+	iam_instance_profile = "${aws_iam_instance_profile.Consul_IAM_Profile.name}"
+	iam_instance_profile = "${aws_iam_instance_profile.Jenkins_IAM_Profile.name}"
 	
 	tags = {
 	Name = "Jenkins2-TerraBuild"
