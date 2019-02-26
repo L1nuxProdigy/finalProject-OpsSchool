@@ -56,4 +56,5 @@ while ( nc -zv $x3 22 2>&1 | grep -q refused ); do
         sleep 2
 		echo refused >> /home/ubuntu/ssh_health_check
 done
-ansible-playbook -i $ANSIBLE_PLAYBOOK_PATH/hosts.yml $ANSIBLE_PLAYBOOK_PATH/kubernetes_play.yml >somthing
+ansible-playbook -i $ANSIBLE_PLAYBOOK_PATH/hosts.yml $ANSIBLE_PLAYBOOK_PATH/kubernetes_play.yml >k8s_ansible_output
+ansible-playbook -i $ANSIBLE_PLAYBOOK_PATH/hosts.yml $ANSIBLE_PLAYBOOK_PATH/jenkins_play.yml >jenkins_ansible_output

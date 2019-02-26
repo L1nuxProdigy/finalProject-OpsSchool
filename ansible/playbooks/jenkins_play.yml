@@ -1,0 +1,5 @@
+---
+- name: jenkins server
+  hosts: jenkins_master_hosts
+  roles:
+    - jenkins_server
