@@ -45,6 +45,9 @@ provider "aws" {
 # IAM Resources
 ##################################################################################
 
+#
+## Consul IAM Resources ##
+#
 resource "aws_iam_instance_profile" "Consul_IAM_Profile" {
   name  = "Consul_Profile"
   role = "${aws_iam_role.Consul_IAM_Role.name}"
@@ -72,6 +75,41 @@ EOF
 
 resource "aws_iam_role" "Consul_IAM_Role" {
   name = "Consul-Role"
+  description = "Created By Terraform"
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "ec2.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+EOF
+}
+
+#
+## Jenkins IAM Resources ##
+#
+resource "aws_iam_instance_profile" "Jenkins_IAM_Profile" {
+  name  = "Jenkins_Profile"
+  role = "${aws_iam_role.Jenkins_IAM_Role.name}"
+}
+
+resource "aws_iam_role_policy" "Jenkins_IAM_Policy" {
+  name = "Jenkins-Describe-Policy"
+  role = "${aws_iam_role.Jenkins_IAM_Role.id}"
+
+  policy = AmazonEC2FullAccess
+
+resource "aws_iam_role" "Jenkins_IAM_Role" {
+  name = "Jenkins-Role"
   description = "Created By Terraform"
 
   assume_role_policy = <<EOF
