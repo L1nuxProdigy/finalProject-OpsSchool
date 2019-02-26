@@ -106,7 +106,7 @@ resource "aws_iam_role_policy" "Jenkins_IAM_Policy" {
   name = "Jenkins-Describe-Policy"
   role = "${aws_iam_role.Jenkins_IAM_Role.id}"
 
-  policy = AmazonEC2FullAccess
+  policy = arn:aws:iam::aws:policy/AmazonEC2FullAccess
 
 resource "aws_iam_role" "Jenkins_IAM_Role" {
   name = "Jenkins-Role"
