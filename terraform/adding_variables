@@ -22,6 +22,7 @@ CONSUL_CLIENT_UBUNTU_PATH=$CONSUL_PATH/'ubuntu'
 JENKINS_PATH=$REPO_HOME_FOLDER/'jenkins'
 JENKINS_SERVER=$JENKINS_PATH/'initial_call_for_server'
 JENKINS_ANOTHER=$JENKINS_PATH/'initial_call_for_another'
+JENKINS_NODE=$JENKINS_PATH/'initial_call_for_node'
 
 # Kubernetes Path #
 KUBERNETES_PATH=$REPO_HOME_FOLDER/'kubernetes'
@@ -55,6 +56,8 @@ echo 'spree_user_data_script = "'$SPREE_USER_DATA'"' >> $TERRAFORM_VARIABLE_TEMP
 echo -e "\n### Temp ###\n" >> $TERRAFORM_VARIABLE_TEMP_FILE
 echo 'jenkins_server_user_data_script = "'$JENKINS_SERVER'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
 echo 'jenkins_another_user_data_script = "'$JENKINS_ANOTHER'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
+echo 'jenkins_node_user_data_script = "'$JENKINS_NODE'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
+
 
 ### moving the new data from "tempVars" to "vars"
 cat $TERRAFORM_VARIABLE_TEMP_FILE > $TERRAFORM_VARIABLE_FILE

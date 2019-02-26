@@ -1,5 +1,10 @@
 ---
+- name: jenkins machines install open jdk
+  hosts: jenkins_machines
+  roles:
+    - jenkins_common
+
 - name: jenkins server
-  hosts: jenkins_master_hosts
+  hosts: jenkins_masters
   roles:
     - jenkins_server

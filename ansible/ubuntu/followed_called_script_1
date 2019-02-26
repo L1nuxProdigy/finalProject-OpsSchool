@@ -24,11 +24,11 @@ x2=${x# }
 x3=$(echo $x2 | cut -d ' ' -f5)
 sed -i 's/jenkins_master_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/hosts.yml
 
-## Finding the Jenkins Master "Another" IP and editing it to the hosts.yml file
-x=$(dig @127.0.0.1 -p 8600 consul-jenkins-another.node.consul +noall +answer | tail -n1)
+## Finding the Jenkins node IP and editing it to the hosts.yml file
+x=$(dig @127.0.0.1 -p 8600 consul-jenkins-node.node.consul +noall +answer | tail -n1)
 x2=${x# }
 x3=$(echo $x2 | cut -d ' ' -f5)
-sed -i 's/jenkins_another_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/hosts.yml
+sed -i 's/jenkins_node_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/hosts.yml
 
 #### K8S ####
 

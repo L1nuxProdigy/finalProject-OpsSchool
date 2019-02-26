@@ -2,14 +2,7 @@
   - name: General | Load varibles
     include_vars:
       file: vars.yml
-      
-  - name: Jenkins | Install Master | install openjdk
-    apt:
-      name: openjdk-8-jre-headless
-      update_cache: yes
-    become: true
-    become_method: sudo
-    
+
   - name: Jenkins | Install Master | add jenkins apt-key
     apt_key:
       url: https://pkg.jenkins.io/debian-stable/jenkins.io.key
