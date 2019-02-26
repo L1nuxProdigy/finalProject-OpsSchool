@@ -37,14 +37,7 @@
       dest: "{{ jenkins_config_xml_debian }}"
       owner: jenkins
       group: jenkins
+    notify:
+      - restart jenkins
     become: true
     become_method: sudo
-    
-  - name: Jenkins | Install Master | ensure jenkins is running
-    service:
-      name: jenkins
-      state: started
-    become: true
-    become_method: sudo
-    
-    
