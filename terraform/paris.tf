@@ -290,7 +290,7 @@ resource "aws_security_group" "SecurityGroup_main" {
 ##################################################################################
 
 resource "aws_instance" "Ansible_and_Consul_Server" {
-	ami           = "${var.ubuntu_image_18-04}"
+	ami           = "${var.ubuntu_image}"
 	instance_type = "t2.micro"
 	key_name        = "${var.aws_key_name}"
 	subnet_id = "${aws_subnet.Subnet_main.id}"
@@ -304,8 +304,8 @@ resource "aws_instance" "Ansible_and_Consul_Server" {
 	user_data = "${file(var.ubuntu_ansible_server_user_data_script)}"
 }
 
-resource "aws_instance" "Kubernetes_Server" {
-	ami           = "${var.ubuntu_image_16-04}"
+resource "aws_instance" "Jenkins_Server" {
+	ami           = "${var.ubuntu_image}"
 	instance_type = "t2.micro"
 	key_name        = "${var.aws_key_name}"
 	subnet_id = "${aws_subnet.Subnet_main.id}"
@@ -313,23 +313,23 @@ resource "aws_instance" "Kubernetes_Server" {
 	iam_instance_profile = "${aws_iam_instance_profile.Consul_IAM_Profile.name}"
 	
 	tags = {
-	Name = "K8S_Server-TerraBuild"
+	Name = "Jenkins_Server-TerraBuild"
 	}
 	
-	user_data = "${file(var.kubernetes_server_user_data_script)}"
+	user_data = "${file(var.jenkins_server_user_data_script)}"
 }
 
-resource "aws_instance" "Kubernetes_Node" {
-	ami           = "${var.ubuntu_image_16-04}"
+resource "aws_instance" "Jenkins_Server2" {
+	ami           = "${var.ubuntu_image}"
 	instance_type = "t2.micro"
 	key_name        = "${var.aws_key_name}"
 	subnet_id = "${aws_subnet.Subnet_main.id}"
 	vpc_security_group_ids = ["${aws_security_group.SecurityGroup_main.id}"]
-	iam_instance_profile = "${aws_iam_instance_profile.Consul_IAM_Profile.name}"
+	iam_instance_profile = "${aws_iam_instance_profile.Consul_IAM_Profile.name, aws_iam_instance_profile.Jenkins_IAM_Profile.name}"
 	
 	tags = {
-	Name = "K8S_Node-TerraBuild"
+	Name = "Jenkins2-TerraBuild"
 	}
 	
-	user_data = "${file(var.kubernetes_node_user_data_script)}"
+	user_data = "${file(var.jenkins_another_user_data_script)}"
 }
