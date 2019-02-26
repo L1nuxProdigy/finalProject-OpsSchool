@@ -5,3 +5,7 @@ k8s_node_ip: kubernetes_node_one_enter_here
 replication_controller_deployment_path: /home/ubuntu/finalProject-OpsSchool/kubernetes/replication_controller.yml
 svc_deployment_path: /home/ubuntu/finalProject-OpsSchool/kubernetes/service.yml
 kube_path_ubuntu_user: /home/ubuntu/.kube
+
+
+jenkins_config_xml_debian: /var/lib/jenkins/config.xml
+jenkins_config_xml_fixed: /home/ubuntu/finalProject-OpsSchool/jenkins/config.xml

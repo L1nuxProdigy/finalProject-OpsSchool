@@ -1,4 +1,8 @@
 ---
+  - name: General | Load varibles
+    include_vars:
+      file: vars.yml
+      
   - name: Jenkins | Install Master | install openjdk
     apt:
       name: openjdk-8-jre-headless
@@ -24,6 +28,13 @@
     apt:
       name: jenkins
       update_cache: yes
+    become: true
+    become_method: sudo
+    
+  - name: Jenkins | Install Master | copy config.xml without initial pass or admin authentication
+    copy:
+      src: {{ jenkins_config_xml_fixed }}
+      dest: {{ jenkins_config_xml_debian }}
     become: true
     become_method: sudo
     
