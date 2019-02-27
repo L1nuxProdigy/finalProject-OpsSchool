@@ -9,3 +9,5 @@ kube_path_ubuntu_user: /home/ubuntu/.kube
 
 jenkins_config_xml_debian: /var/lib/jenkins/config.xml
 jenkins_config_xml_fixed: /home/ubuntu/finalProject-OpsSchool/jenkins/config.xml
+
+jenkins_java_opts: "-Djenkins.install.runSetupWizard=false"
