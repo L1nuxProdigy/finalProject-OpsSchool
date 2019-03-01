@@ -11,6 +11,6 @@ jenkins_config_xml_debian: /var/lib/jenkins/config.xml
 jenkins_config_xml_fixed: /home/ubuntu/finalProject-OpsSchool/jenkins/config.xml
 
 jenkins_config_path_debian: /var/lib/jenkins/
-jenkins_config_xml_fixed: /home/ubuntu/finalProject-OpsSchool/jenkins/config_files/JenkinsRunningFolder/
+jenkins_config_files_fixed: /home/ubuntu/finalProject-OpsSchool/jenkins/config_files/JenkinsRunningFolder/
 
 jenkins_java_opts: "-Djenkins.install.runSetupWizard=false"
