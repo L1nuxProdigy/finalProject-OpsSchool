@@ -24,8 +24,22 @@
     become: true
     become_method: sudo
 
+  - name: Jenkins | Install Master | ensure jenkins is stopped
+    service:
+      name: jenkins
+      state: stopped
+    become: true
+    become_method: sudo
+
   - name: Set Jenkins command line options
     lineinfile:
       dest: /etc/default/jenkins
       regexp: '^JAVA_ARGS='
       line: "JAVA_ARGS=\"{{ jenkins_java_opts }}\""
+      
+  - name: Jenkins | Install Master | ensure jenkins is running
+    service:
+      name: jenkins
+      state: started
+    become: true
+    become_method: sudo
