@@ -15,12 +15,11 @@ echo $(curl "http://169.254.169.254/latest/meta-data/public-ipv4") > $USER_HOME_
 cd $USER_HOME_FOLDER
 git clone https://github.com/L1nuxProdigy/finalProject-OpsSchool
 
-## installing consul
-$CONSUL_PATH/'consul_client_jenkins_server'
-
 ## adding public key so jenkins master can connect
 $ANSIBLE_PATH/'ansible_node'
 
+## installing consul
+$CONSUL_PATH/'consul_client_jenkins_server'
 
 ## in practive does nothing, for validation only
 chown -R ubuntu $REPO_HOME_FOLDER
