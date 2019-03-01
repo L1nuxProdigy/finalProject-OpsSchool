@@ -5,13 +5,19 @@
 # Finding IP is used in Waiting_For_IP_Resolution
 Waiting_For_IP_Resolution () {
 	ip_string_length=0
+	echo "entering loop" >>/home/ubuntu/loop_ip_resu
 	while (( ip_string_length < 4 ))
 	do
 		x=$(dig @127.0.0.1 -p 8600 $consul_machine_name.node.consul +noall +answer | tail -n1)
 		x2=${x# }
 		x3=$(echo $x2 | cut -d ' ' -f5)
 		ip_string_length=${#x3}
+		echo $x >>/home/ubuntu/loop_ip_resu
+		echo $x2 >>/home/ubuntu/loop_ip_resu
+		echo $x3 >>/home/ubuntu/loop_ip_resu
+		echo "end one loop cycle" >>/home/ubuntu/loop_ip_resu
 	done
+	echo "end function" >>/home/ubuntu/loop_ip_resu	
 }
 
 # SSH Healthceck
