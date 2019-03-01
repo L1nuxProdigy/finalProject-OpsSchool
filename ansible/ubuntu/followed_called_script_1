@@ -24,7 +24,7 @@ CONSUL_PATH=$REPO_HOME_FOLDER/'consul/ubuntu'
 sed -i 's/#host_key_checking = False/host_key_checking = False/g' /etc/ansible/ansible.cfg
 
 ## Waiting for Consul Clients to be up
-while [[ $(consul members | head -n4 | wc -l | bc) < 5 ]]; do
+while [[ $(consul members | head -n4 | wc -l | bc) < 4 ]]; do
         sleep 2
 done
 
