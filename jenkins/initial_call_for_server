@@ -12,6 +12,9 @@ CONSUL_PATH=$REPO_HOME_FOLDER/'consul/ubuntu'
 cd $USER_HOME_FOLDER
 git clone https://github.com/L1nuxProdigy/finalProject-OpsSchool
 
+## echoing the machine public ip to the file My_IP
+echo $(curl "http://169.254.169.254/latest/meta-data/public-ipv4") > $USER_HOME_FOLDER/My_IP
+
 ## installing consul
 $CONSUL_PATH/'consul_client_jenkins_server'
 
