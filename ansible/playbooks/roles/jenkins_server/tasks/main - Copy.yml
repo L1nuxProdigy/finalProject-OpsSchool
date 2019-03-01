@@ -24,24 +24,7 @@
     become: true
     become_method: sudo
     
-  - name: Jenkins | Install Master | stop the jenkins service
-    service:
-      name: jenkins
-      state: stopped
-    become: true
-    become_method: sudo
-    
-  - name: Jenkins | Install Master | copy config.xml without initial pass or admin authentication
-    copy:
-      src: "{{ jenkins_config_files_fixed }}"
-      dest: "{{ jenkins_config_path_debian }}"
-      owner: jenkins
-      group: jenkins
-      directory_mode: yes
-    become: true
-    become_method: sudo
-    
-  - name: Jenkins | Install Master | start the jenkins service
+  - name: Jenkins | Install Master | ensure jenkins is running
     service:
       name: jenkins
       state: started

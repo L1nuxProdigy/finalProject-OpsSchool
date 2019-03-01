@@ -26,8 +26,8 @@
     
   - name: Jenkins | Install Master | copy config.xml without initial pass or admin authentication
     copy:
-      src: "{{ jenkins_config_xml_debian }}"
-      dest: "{{ jenkins_config_xml_fixed }}"
+      src: "{{ jenkins_config_xml_fixed }}"
+      dest: "{{ jenkins_config_xml_debian }}"
       owner: jenkins
       group: jenkins
     notify:
