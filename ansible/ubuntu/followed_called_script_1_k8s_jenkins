@@ -77,20 +77,20 @@ sed -i 's/Change_Me_to_IP/'$x3'/g' $JENKINS_MASTER_CONFIGURATION_FILES/nodes/Nod
 #### K8S ####
 
 ## Finding the Kubernetes Master IP and editing it to the hosts.yml file + SSH_Healthcheck
-#consul_machine_name=consul-kubernetes-master
-#Waiting_For_IP_Resolution "$consul_machine_name"
-#SSH_Healthcheck
-#sed -i 's/kubernetes_master_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/hosts.yml
-#sed -i 's/kubernetes_master_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/vars.yml
+consul_machine_name=consul-kubernetes-master
+Waiting_For_IP_Resolution "$consul_machine_name"
+SSH_Healthcheck
+sed -i 's/kubernetes_master_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/hosts.yml
+sed -i 's/kubernetes_master_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/vars.yml
 
 ## Finding the Kubernetes Node IP and editing it to the hosts.yml file + SSH_Healthcheck
-#consul_machine_name=consul-kubernetes-node
-#Waiting_For_IP_Resolution "$consul_machine_name"
-#SSH_Healthcheck
-#sed -i 's/kubernetes_node_one_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/hosts.yml
-#sed -i 's/kubernetes_node_one_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/vars.yml
+consul_machine_name=consul-kubernetes-node
+Waiting_For_IP_Resolution "$consul_machine_name"
+SSH_Healthcheck
+sed -i 's/kubernetes_node_one_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/hosts.yml
+sed -i 's/kubernetes_node_one_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/vars.yml
 
 #### RUNNING PLAYBOOKS ####
 #ansible-playbook -i $ANSIBLE_PLAYBOOK_PATH/hosts.yml $ANSIBLE_PLAYBOOK_PATH/kubernetes_play.yml >k8s_ansible_output
-ansible-playbook -i $ANSIBLE_PLAYBOOK_PATH/hosts.yml $ANSIBLE_PLAYBOOK_PATH/jenkins_play.yml >jenkins_ansible_output 
-
+#ansible-playbook -i $ANSIBLE_PLAYBOOK_PATH/hosts.yml $ANSIBLE_PLAYBOOK_PATH/jenkins_play.yml >jenkins_ansible_output 
+ansible-galaxy install --roles-path $ANSIBLE_PLAYBOOK_PATH/roles emmetog.jenkins

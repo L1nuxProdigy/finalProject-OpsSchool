@@ -1,6 +1,6 @@
 ---
 - name: jenkins machines install open jdk
-  hosts: jenkins_nodes
+  hosts: jenkins_machines
   roles:
     - jenkins_common
 
@@ -12,4 +12,4 @@
 - name: jenkins server
   hosts: jenkins_masters
   roles:
-    - jenkins_emmetog
+    - jenkins_server
