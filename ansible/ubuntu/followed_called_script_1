@@ -3,13 +3,13 @@
 ###Setting Functions
 # SSH Healthceck
 SSH_Healthcheck () {
-	echo "SSH Function Start" >/home/ubuntu/ssh_health_check
+	echo "SSH Function Start" >>/home/ubuntu/ssh_health_check
 	echo $x3 >/home/ubuntu/ssh_health_check
 	while ( nc -zv $x3 22 2>&1 | grep -q refused ); do
 			sleep 2
 			echo refused >> /home/ubuntu/ssh_health_check
 	done
-	echo "SSH function done" >/home/ubuntu/ssh_health_check
+	echo "SSH function done" >>/home/ubuntu/ssh_health_check
 }
 
 ###Setting some in scripts vars for later easier edit
@@ -24,7 +24,7 @@ CONSUL_PATH=$REPO_HOME_FOLDER/'consul/ubuntu'
 sed -i 's/#host_key_checking = False/host_key_checking = False/g' /etc/ansible/ansible.cfg
 
 ## Waiting for Consul Clients to be up
-while [[ $(consul members | head -n4 | wc -l | bc) < 4 ]]; do
+while [[ $(consul members | head -n4 | wc -l | bc) < 5 ]]; do
         sleep 2
 done
 
@@ -34,19 +34,21 @@ done
 x=$(dig @127.0.0.1 -p 8600 consul-jenkins-master.node.consul +noall +answer | tail -n1)
 x2=${x# }
 x3=$(echo $x2 | cut -d ' ' -f5)
+SSH_Healthcheck
 sed -i 's/jenkins_master_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/hosts.yml
 
 ## Finding the Jenkins "Another" IP and editing it to the hosts.yml file
 x=$(dig @127.0.0.1 -p 8600 consul-jenkins-another.node.consul +noall +answer | tail -n1)
 x2=${x# }
 x3=$(echo $x2 | cut -d ' ' -f5)
-sed -i 's/jenkins_another_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/hosts.yml
 SSH_Healthcheck
+sed -i 's/jenkins_another_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/hosts.yml
 
 ## Finding the Jenkins node IP and editing it to the hosts.yml file
 x=$(dig @127.0.0.1 -p 8600 consul-jenkins-node.node.consul +noall +answer | tail -n1)
 x2=${x# }
 x3=$(echo $x2 | cut -d ' ' -f5)
+SSH_Healthcheck
 sed -i 's/jenkins_node_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/hosts.yml
 
 #### K8S ####
@@ -55,6 +57,7 @@ sed -i 's/jenkins_node_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/hosts.yml
 x=$(dig @127.0.0.1 -p 8600 consul-kubernetes-master.node.consul +noall +answer | tail -n1)
 x2=${x# }
 x3=$(echo $x2 | cut -d ' ' -f5)
+SSH_Healthcheck
 sed -i 's/kubernetes_master_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/hosts.yml
 sed -i 's/kubernetes_master_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/vars.yml
 
@@ -67,6 +70,7 @@ done
 x=$(dig @127.0.0.1 -p 8600 consul-kubernetes-node.node.consul +noall +answer | tail -n1)
 x2=${x# }
 x3=$(echo $x2 | cut -d ' ' -f5)
+SSH_Healthcheck
 sed -i 's/kubernetes_node_one_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/hosts.yml
 sed -i 's/kubernetes_node_one_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/vars.yml
 
