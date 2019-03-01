@@ -388,7 +388,7 @@ resource "aws_instance" "Jenkins_Another" {
 	iam_instance_profile = "${aws_iam_instance_profile.Consul_IAM_Profile.name}"
 	
 	tags = {
-	Name = "Jenkins_Node-TerraBuild"
+	Name = "Jenkins_Another-TerraBuild"
 	}
 	
 	user_data = "${file(var.jenkins_another_user_data_script)}"
