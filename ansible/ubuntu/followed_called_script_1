@@ -3,13 +3,13 @@
 ###Setting Functions
 # SSH Healthceck
 SSH_Healthcheck () {
-	echo "SSH Function Start" >>/home/ubuntu/ssh_health_check
-	echo $x3 >/home/ubuntu/ssh_health_check
+	echo "SSH Start" >>/home/ubuntu/ssh_health_check
+	echo $x3 >>/home/ubuntu/ssh_health_check
 	while ( nc -zv $x3 22 2>&1 | grep -q refused ); do
 			sleep 2
 			echo refused >> /home/ubuntu/ssh_health_check
 	done
-	echo "SSH function done" >>/home/ubuntu/ssh_health_check
+	echo "SSH done" >>/home/ubuntu/ssh_health_check
 }
 
 ###Setting some in scripts vars for later easier edit
