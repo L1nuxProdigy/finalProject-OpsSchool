@@ -30,21 +30,21 @@ done
 
 #### Jenkins ####
 
-## Finding the Jenkins Master IP and editing it to the hosts.yml file
+## Finding the Jenkins Master IP and editing it to the hosts.yml file + SSH_Healthcheck
 x=$(dig @127.0.0.1 -p 8600 consul-jenkins-master.node.consul +noall +answer | tail -n1)
 x2=${x# }
 x3=$(echo $x2 | cut -d ' ' -f5)
 SSH_Healthcheck
 sed -i 's/jenkins_master_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/hosts.yml
 
-## Finding the Jenkins "Another" IP and editing it to the hosts.yml file
+## Finding the Jenkins "Another" IP and editing it to the hosts.yml file + SSH_Healthcheck
 x=$(dig @127.0.0.1 -p 8600 consul-jenkins-another.node.consul +noall +answer | tail -n1)
 x2=${x# }
 x3=$(echo $x2 | cut -d ' ' -f5)
 SSH_Healthcheck
 sed -i 's/jenkins_another_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/hosts.yml
 
-## Finding the Jenkins node IP and editing it to the hosts.yml file
+## Finding the Jenkins node IP and editing it to the hosts.yml file + SSH_Healthcheck
 x=$(dig @127.0.0.1 -p 8600 consul-jenkins-node.node.consul +noall +answer | tail -n1)
 x2=${x# }
 x3=$(echo $x2 | cut -d ' ' -f5)
@@ -53,7 +53,7 @@ sed -i 's/jenkins_node_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/hosts.yml
 
 #### K8S ####
 
-## Finding the Kubernetes Master IP and editing it to the hosts.yml file
+## Finding the Kubernetes Master IP and editing it to the hosts.yml file + SSH_Healthcheck
 x=$(dig @127.0.0.1 -p 8600 consul-kubernetes-master.node.consul +noall +answer | tail -n1)
 x2=${x# }
 x3=$(echo $x2 | cut -d ' ' -f5)
@@ -61,12 +61,7 @@ SSH_Healthcheck
 sed -i 's/kubernetes_master_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/hosts.yml
 sed -i 's/kubernetes_master_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/vars.yml
 
-while ( nc -zv $x3 22 2>&1 | grep -q refused ); do
-        sleep 2
-		echo refused >> /home/ubuntu/ssh_health_check
-done
-
-## Finding the Kubernetes Node IP and editing it to the hosts.yml file
+## Finding the Kubernetes Node IP and editing it to the hosts.yml file + SSH_Healthcheck
 x=$(dig @127.0.0.1 -p 8600 consul-kubernetes-node.node.consul +noall +answer | tail -n1)
 x2=${x# }
 x3=$(echo $x2 | cut -d ' ' -f5)
@@ -74,10 +69,6 @@ SSH_Healthcheck
 sed -i 's/kubernetes_node_one_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/hosts.yml
 sed -i 's/kubernetes_node_one_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/vars.yml
 
-#### RUNNING PLAYBOOKS, checking ssh on the remote machines first ####
-while ( nc -zv $x3 22 2>&1 | grep -q refused ); do
-        sleep 2
-		echo refused >> /home/ubuntu/ssh_health_check
-done
+#### RUNNING PLAYBOOKS ####
 ansible-playbook -i $ANSIBLE_PLAYBOOK_PATH/hosts.yml $ANSIBLE_PLAYBOOK_PATH/kubernetes_play.yml >k8s_ansible_output
 ansible-playbook -i $ANSIBLE_PLAYBOOK_PATH/hosts.yml $ANSIBLE_PLAYBOOK_PATH/jenkins_play.yml >jenkins_ansible_output

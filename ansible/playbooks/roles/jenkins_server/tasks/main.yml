@@ -30,6 +30,7 @@
       dest: "{{ jenkins_config_files_fixed }}"
       owner: jenkins
       group: jenkins
+      directory_mode: yes
     notify:
       - restart jenkins
     become: true
