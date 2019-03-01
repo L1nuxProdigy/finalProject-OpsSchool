@@ -19,6 +19,9 @@ REPO_HOME_FOLDER=$USER_HOME_FOLDER'/finalProject-OpsSchool'
 ANSIBLE_PATH=$REPO_HOME_FOLDER/'ansible/ubuntu'
 ANSIBLE_PLAYBOOK_PATH=$ANSIBLE_PATH/../'playbooks'
 CONSUL_PATH=$REPO_HOME_FOLDER/'consul/ubuntu'
+JENKINS_PATH=$REPO_HOME_FOLDER/'jenkins'
+JENKINS_MASTER_CONFIGURATION_FILES=$JENKINS_PATH/'config_files/JenkinsRunningFolder'
+
 
 ## disable ansible host key chekcing
 sed -i 's/#host_key_checking = False/host_key_checking = False/g' /etc/ansible/ansible.cfg
@@ -37,6 +40,7 @@ x2=${x# }
 x3=$(echo $x2 | cut -d ' ' -f5)
 SSH_Healthcheck
 sed -i 's/jenkins_master_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/hosts.yml
+sed -i 's/Change_Me_to_IP/'$x3'/g' $JENKINS_MASTER_CONFIGURATION_FILES/jenkins.model.JenkinsLocationConfiguration.xml
 
 ## Finding the Jenkins "Another" IP and editing it to the hosts.yml file + SSH_Healthcheck
 x=$(dig @127.0.0.1 -p 8600 consul-jenkins-another.node.consul +noall +answer | tail -n1)
@@ -51,6 +55,7 @@ x2=${x# }
 x3=$(echo $x2 | cut -d ' ' -f5)
 SSH_Healthcheck
 sed -i 's/jenkins_node_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/hosts.yml
+sed -i 's/Change_Me_to_IP/'$x3'/g' $JENKINS_MASTER_CONFIGURATION_FILES/nodes/NodeStatic/config.xml
 
 #### K8S ####
 

@@ -6,7 +6,7 @@
   <mode>NORMAL</mode>
   <retentionStrategy class="hudson.slaves.RetentionStrategy$Always"/>
   <launcher class="hudson.plugins.sshslaves.SSHLauncher" plugin="ssh-slaves@1.29.4">
-    <host>10.0.1.149</host>
+    <host>Change_Me_to_IP</host>
     <port>22</port>
     <credentialsId>902d3b30-9c09-42fd-babf-c9a93b09c090</credentialsId>
     <launchTimeoutSeconds>210</launchTimeoutSeconds>
