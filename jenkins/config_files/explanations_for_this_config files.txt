@@ -1,0 +1,7 @@
+1. credentials.xml - explanatory
+
+2. hudson.plugins.git.GitTool.xml - for plugins maybe only initial ones
+
+3. jenkins.model.JenkinsLocationConfiguration.xml - the initial jenkins url configuration, require automation editing
+
+4. nodes file - explenatory, the config file should be edited with the right ip address
