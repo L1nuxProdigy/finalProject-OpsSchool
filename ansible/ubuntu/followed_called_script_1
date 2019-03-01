@@ -4,15 +4,13 @@
 
 # Finding IP is used in Waiting_For_IP_Resolution
 Waiting_For_IP_Resolution () {
-	x=$(dig @127.0.0.1 -p 8600 $1.node.consul +noall +answer | tail -n1)
-	x2=${x# }
-	x3=$(echo $x2 | cut -d ' ' -f5)
-	ip_string_length=${#x3}
+	ip_string_length=0
 	while (( ip_string_length < 4 ))
 	do
 		x=$(dig @127.0.0.1 -p 8600 $consul_machine_name.node.consul +noall +answer | tail -n1)
 		x2=${x# }
 		x3=$(echo $x2 | cut -d ' ' -f5)
+		ip_string_length=${#x3}
 	done
 }
 
