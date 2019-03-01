@@ -1,5 +1,17 @@
 #!/bin/bash
 
+###Setting Functions
+# SSH Healthceck
+SSH_Healthcheck () {
+	echo "SSH Function Start" >/home/ubuntu/ssh_health_check
+	echo $x3 >/home/ubuntu/ssh_health_check
+	while ( nc -zv $x3 22 2>&1 | grep -q refused ); do
+			sleep 2
+			echo refused >> /home/ubuntu/ssh_health_check
+	done
+	echo "SSH function done" >/home/ubuntu/ssh_health_check
+}
+
 ###Setting some in scripts vars for later easier edit
 
 USER_HOME_FOLDER='/home/ubuntu'
@@ -23,6 +35,13 @@ x=$(dig @127.0.0.1 -p 8600 consul-jenkins-master.node.consul +noall +answer | ta
 x2=${x# }
 x3=$(echo $x2 | cut -d ' ' -f5)
 sed -i 's/jenkins_master_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/hosts.yml
+
+## Finding the Jenkins "Another" IP and editing it to the hosts.yml file
+x=$(dig @127.0.0.1 -p 8600 consul-jenkins-another.node.consul +noall +answer | tail -n1)
+x2=${x# }
+x3=$(echo $x2 | cut -d ' ' -f5)
+sed -i 's/jenkins_another_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/hosts.yml
+SSH_Healthcheck
 
 ## Finding the Jenkins node IP and editing it to the hosts.yml file
 x=$(dig @127.0.0.1 -p 8600 consul-jenkins-node.node.consul +noall +answer | tail -n1)
