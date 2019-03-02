@@ -14,7 +14,7 @@
 
 - name: Install apt PPA dependencies
   apt:
-    name: python-software-properties
+    name: software-properties-common
 
 - name: Install the Debian keyring
   apt:
@@ -22,12 +22,12 @@
 
 - name: Add Debian experimental repository for OpenJDK
   apt_repository:
-    repo: deb http://httpredir.debian.org/debian experimental main
+    repo: 'deb http://httpredir.debian.org/debian experimental main'
     state: present
 
 - name: Add Debian sid repository for OpenJDK
   apt_repository:
-    repo: deb http://httpredir.debian.org/debian sid main
+    repo: 'deb http://httpredir.debian.org/debian sid main'
     state: present
 
 - name: Create pinning file for apt
@@ -56,6 +56,8 @@
   apt_repository:
     repo: 'deb https://pkg.jenkins.io/debian-stable binary/'
     state: present
+  become: true
+  become_method: sudo
 
 - name: Install Jenkins binary package
   apt:

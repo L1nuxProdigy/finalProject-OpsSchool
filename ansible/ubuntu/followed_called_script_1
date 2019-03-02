@@ -28,7 +28,7 @@ SSH_Healthcheck () {
 	echo $x3 >>/home/ubuntu/ssh_health_check
 	while ( nc -zv $x3 22 2>&1 | grep -q refused ); do
 			sleep 2
-			echo refused >> /home/ubuntu/ssh_health_check
+			echo "refused" >> /home/ubuntu/ssh_health_check
 	done
 	echo "SSH done" >>/home/ubuntu/ssh_health_check
 }
