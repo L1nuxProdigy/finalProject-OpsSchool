@@ -22,10 +22,26 @@ jenkins_port: "8080"
 jenkins_url: "http://Change_Me_to_IP"
 
 jenkins_plugins:
+  - credentials-binding
+  - pipeline-github-lib
+  - pipeline-stage-view
   - git
+  - ssh-slaves
+  
   - log-parser
   - copyartifact
   - workflow-aggregator
   - workflow-multibranch
   - docker-workflow
   - template-project
+  
+  - cloudbees-folder
+  - antisamy-markup-formatter
+  - build-timeout
+  - timestamper
+  - ws-cleanup
+  - ant
+  - gradle
+  - workflow-aggregator
+  - github-branch-source
+  - subversion
