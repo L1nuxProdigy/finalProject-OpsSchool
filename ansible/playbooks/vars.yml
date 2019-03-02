@@ -19,7 +19,7 @@ jenkins_users_dir: "{{ jenkins_fixed_config_files_path }}/users"
 jenkins_java_opts: "-Djenkins.install.runSetupWizard=false"
 
 jenkins_port: "8080"
-jenkins_url: "Change_Me_to_IP"
+jenkins_url: "http://Change_Me_to_IP"
 
 jenkins_plugins:
   - git
