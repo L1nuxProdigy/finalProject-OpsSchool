@@ -14,5 +14,6 @@ jenkins_config_xml_debian: "{{ jenkins_home_folder }}/config.xml"
 jenkins_config_xml_fixed: "{{ jenkins_fixed_config_files_path }}/config.xml"
 jenkins_location_xml: "{{ jenkins_fixed_config_files_path }}/jenkins.model.JenkinsLocationConfiguration.xml"
 jenkins_credentials_xml: "{{ jenkins_fixed_config_files_path }}/credentials.xml"
+jenkins_users_dir: "{{ jenkins_fixed_config_files_path }}/users"
 
 jenkins_java_opts: "-Djenkins.install.runSetupWizard=false"
