@@ -24,11 +24,15 @@
   apt_repository:
     repo: 'deb http://httpredir.debian.org/debian experimental main'
     state: present
+  become: true
+  become_method: sudo
 
 - name: Add Debian sid repository for OpenJDK
   apt_repository:
     repo: 'deb http://httpredir.debian.org/debian sid main'
     state: present
+  become: true
+  become_method: sudo
 
 - name: Create pinning file for apt
   copy:
@@ -56,8 +60,6 @@
   apt_repository:
     repo: 'deb https://pkg.jenkins.io/debian-stable binary/'
     state: present
-  become: true
-  become_method: sudo
 
 - name: Install Jenkins binary package
   apt:

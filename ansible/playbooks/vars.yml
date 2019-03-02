@@ -9,9 +9,9 @@ kube_path_ubuntu_user: /home/ubuntu/.kube
 jenkins_fixed_config_files_path: /home/ubuntu/finalProject-OpsSchool/jenkins/config_files/JenkinsRunningFolder
 jenkins_home_folder: /var/lib/jenkins
 
-jenkins_config_xml_debian: {{ jenkins_home_folder }}/config.xml
+jenkins_config_xml_debian: "{{ jenkins_home_folder }}/config.xml"
 
-jenkins_config_xml_fixed: {{ jenkins_fixed_config_files_path }}/config.xmljenkins_config_xml_fixed: {{ jenkins_fixed_config_files_path }}/config.xml
-jenkins_location_xml: {{ jenkins_fixed_config_files_path }}/jenkins.model.JenkinsLocationConfiguration.xml
+jenkins_config_xml_fixed: "{{ jenkins_fixed_config_files_path }}/config.xml"
+jenkins_location_xml: "{{ jenkins_fixed_config_files_path }}/jenkins.model.JenkinsLocationConfiguration.xml"
 
 jenkins_java_opts: "-Djenkins.install.runSetupWizard=false"
