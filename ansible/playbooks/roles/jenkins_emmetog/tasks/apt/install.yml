@@ -64,6 +64,8 @@
     name: "jenkins={{ jenkins_version }}"
     force: yes
     update_cache: yes
+  become: true
+  become_method: sudo
 
 - name: Set JENKINS_HOME
   lineinfile:
