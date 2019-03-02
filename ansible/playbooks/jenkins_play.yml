@@ -14,4 +14,5 @@
 - name: fully automate jenkins server with EMMETOG
   hosts: jenkins_masters2
   roles:
-    - jenkins_emmetog
+    - jenkins_common
+    - jenkins_server_old
