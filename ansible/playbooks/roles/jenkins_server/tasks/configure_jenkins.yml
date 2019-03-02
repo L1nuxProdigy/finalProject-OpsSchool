@@ -32,10 +32,10 @@
     become: true
     become_method: sudo
     
-  - name: Nadav Role | copy credentials file
+  - name: Nadav Role | copy config.xml without initial pass or admin authentication
     copy:
-      src: "{{ jenkins_credentials_xml }}"
-      dest: "{{ jenkins_home_folder }}"
+      src: "{{ jenkins_config_xml_fixed }}"
+      dest: "{{ jenkins_config_xml_debian }}"
       owner: jenkins
       group: jenkins
     become: true
