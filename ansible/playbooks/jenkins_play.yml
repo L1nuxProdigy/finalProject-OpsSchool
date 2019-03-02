@@ -10,6 +10,6 @@
     - kubernetes_docker
 
 - name: jenkins server
-  hosts: jenkins_masters
+  hosts: jenkins_masters2
   roles:
     - jenkins_emmetog

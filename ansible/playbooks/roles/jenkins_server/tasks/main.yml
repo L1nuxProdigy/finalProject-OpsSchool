@@ -3,41 +3,50 @@
     include_vars:
       file: vars.yml
 
-  - name: Jenkins | Install Master | add jenkins apt-key
+  - name: Jenkins Server Nadav Role | add jenkins apt-key
     apt_key:
       url: https://pkg.jenkins.io/debian-stable/jenkins.io.key
       state: present
     become: true
     become_method: sudo
     
-  - name: Jenkins | Install Master | configure the repository
+  - name: Jenkins Server Nadav Role | configure the repository
     apt_repository:
       repo: 'deb https://pkg.jenkins.io/debian-stable binary/'
       state: present
     become: true
     become_method: sudo
 
-  - name: Jenkins | Install Master | install jenkins
+  - name: Jenkins Server Nadav Role | install jenkins
     apt:
       name: jenkins
       update_cache: yes
     become: true
     become_method: sudo
 
-  - name: Jenkins | Install Master | ensure jenkins is stopped
+  - name: Jenkins Server Nadav Role | Before altering configuration stopping the service
     service:
       name: jenkins
       state: stopped
     become: true
     become_method: sudo
 
-  - name: Set Jenkins command line options
+  - name: Jenkins Server Nadav Role | Set Jenkins command line options
     lineinfile:
       dest: /etc/default/jenkins
       regexp: '^JAVA_ARGS='
       line: "JAVA_ARGS=\"{{ jenkins_java_opts }}\""
+
+  - name: Jenkins Server Nadav Role | copy url and port config file
+    copy:
+      src: "{{ jenkins_location_xml }}"
+      dest: "{{ jenkins_home_folder }}"
+      owner: jenkins
+      group: jenkins
+    become: true
+    become_method: sudo
       
-  - name: Jenkins | Install Master | ensure jenkins is running
+  - name: Jenkins Server Nadav Role | ensure jenkins is running
     service:
       name: jenkins
       state: started
