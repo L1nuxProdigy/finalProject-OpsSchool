@@ -2,10 +2,12 @@
 <hudson>
   <disabledAdministrativeMonitors/>
   <version>2.150.3</version>
-  <installStateName>NEW</installStateName>
+  <installStateName>RUNNING</installStateName>
   <numExecutors>2</numExecutors>
   <mode>NORMAL</mode>
-  <useSecurity>false</useSecurity>
+  <useSecurity>true</useSecurity>
+  <authorizationStrategy class="hudson.security.AuthorizationStrategy$Unsecured"/>
+  <securityRealm class="hudson.security.SecurityRealm$None"/>
   <disableRememberMe>false</disableRememberMe>
   <projectNamingStrategy class="jenkins.model.ProjectNamingStrategy$DefaultProjectNamingStrategy"/>
   <workspaceDir>${JENKINS_HOME}/workspace/${ITEM_FULL_NAME}</workspaceDir>
@@ -32,3 +34,4 @@
   </crumbIssuer>
   <nodeProperties/>
   <globalNodeProperties/>
+</hudson>
