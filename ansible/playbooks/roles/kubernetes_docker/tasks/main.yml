@@ -1,5 +1,5 @@
 ---    
-  - name: Docker | Install Docker | Install Docker from Repo
+  - name: Install Docker from Repo
     apt:
       name: docker.io
       update_cache: yes
@@ -7,12 +7,12 @@
     become: true
     become_method: sudo
 
-  - name: Docker | Install Docker | Create Docker group
+  - name: Create Docker group
     group:
       name: docker
       state: present
 
-  - name: Docker | Install Docker | Add Docker group to local user
+  - name: Add Docker group to local user
     user:
       name: ubuntu
       comment: "add user to docker group"
@@ -21,7 +21,7 @@
     become: true
     become_method: sudo
 
-  - name: Docker | Install Docker | Enable Docker service at boot
+  - name: Enable Docker service at boot
     systemd:
       name: docker
       enabled: yes

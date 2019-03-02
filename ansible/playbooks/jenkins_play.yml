@@ -1,15 +1,17 @@
 ---
-- name: jenkins machines install open jdk
+- name: Configure node machine with java amd docker
   hosts: jenkins_nodes
   roles:
     - jenkins_common
-
-- name: install docker on jenkins node with the k8s role
-  hosts: jenkins_nodes
-  roles:
     - kubernetes_docker
 
-- name: jenkins server
+- name: Install Jenkins Server Nadav Way
+  hosts: jenkins_masters
+  roles:
+    - jenkins_common
+    - jenkins_server
+
+- name: fully automate jenkins server with EMMETOG
   hosts: jenkins_masters2
   roles:
     - jenkins_emmetog
