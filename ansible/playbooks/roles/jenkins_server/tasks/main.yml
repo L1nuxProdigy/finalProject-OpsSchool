@@ -30,6 +30,13 @@
       state: stopped
     become: true
     become_method: sudo
+    
+  - name: Nadav Role | Ensure correct ownership of the /etc/default/jenkins file
+    file:
+      path: /etc/default/jenkins
+      owner: jenkins
+      group: jenkins
+      mode: 0755
 
   - name: Nadav Role | Set Jenkins command line options
     lineinfile:
@@ -64,7 +71,7 @@
     become: true
     become_method: sudo
  
-   - name: Jenkins | Install Master | copy config.xml without initial pass or admin authentication
+  - name: Nadav Role | copy users folder
     copy:
       src: "{{ jenkins_users_dir }}"
       dest: "{{ jenkins_home_folder }}/"
