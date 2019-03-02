@@ -30,6 +30,13 @@
       state: stopped
     become: true
     become_method: sudo
+    
+  - name: Nadav Role | Ensure correct ownership of the /etc/default/jenkins file
+    file:
+      path: /etc/default/jenkins
+      owner: jenkins
+      group: jenkins
+      mode: 0755
 
   - name: Nadav Role | Set Jenkins command line options
     lineinfile:
@@ -61,6 +68,16 @@
       dest: "{{ jenkins_config_xml_debian }}"
       owner: jenkins
       group: jenkins
+    become: true
+    become_method: sudo
+ 
+  - name: Nadav Role | copy users folder
+    copy:
+      src: "{{ jenkins_users_dir }}"
+      dest: "{{ jenkins_home_folder }}/"
+      owner: jenkins
+      group: jenkins
+      directory_mode: yes
     become: true
     become_method: sudo
       

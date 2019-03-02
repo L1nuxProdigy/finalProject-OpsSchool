@@ -30,13 +30,6 @@
       state: stopped
     become: true
     become_method: sudo
-    
-  - name: Nadav Role | Ensure correct ownership of the /etc/default/jenkins file
-    file:
-      path: /etc/default/jenkins
-      owner: jenkins
-      group: jenkins
-      mode: 0755
 
   - name: Nadav Role | Set Jenkins command line options
     lineinfile:
