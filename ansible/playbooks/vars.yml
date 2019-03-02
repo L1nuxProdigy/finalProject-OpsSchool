@@ -17,3 +17,16 @@ jenkins_credentials_xml: "{{ jenkins_fixed_config_files_path }}/credentials.xml"
 jenkins_users_dir: "{{ jenkins_fixed_config_files_path }}/users"
 
 jenkins_java_opts: "-Djenkins.install.runSetupWizard=false"
+
+jenkins_port: "8080"
+jenkins_url: "Change_Me_to_IP"
+
+jenkins_plugins:
+  - git
+  - log-parser
+  - copyartifact
+  - workflow-aggregator
+  - workflow-multibranch
+  - docker-workflow
+  - template-project
+  - ec2

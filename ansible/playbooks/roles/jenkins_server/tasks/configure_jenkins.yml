@@ -1,0 +1,61 @@
+---
+  - name: General | Load varibles
+    include_vars:
+      file: vars.yml
+      
+  - name: Nadav Role | Before altering configuration stopping the service
+    service:
+      name: jenkins
+      state: stopped
+    become: true
+    become_method: sudo
+    
+  - name: Nadav Role | Ensure correct ownership of the /etc/default/jenkins file
+    file:
+      path: /etc/default/jenkins
+      owner: jenkins
+      group: jenkins
+      mode: 0644
+
+  - name: Nadav Role | Set Jenkins command line options
+    lineinfile:
+      dest: /etc/default/jenkins
+      regexp: '^JAVA_ARGS='
+      line: "JAVA_ARGS=\"{{ jenkins_java_opts }}\""
+
+  - name: Nadav Role | copy url and port config file
+    copy:
+      src: "{{ jenkins_location_xml }}"
+      dest: "{{ jenkins_home_folder }}"
+      owner: jenkins
+      group: jenkins
+    become: true
+    become_method: sudo
+    
+  - name: Nadav Role | copy credentials file
+    copy:
+      src: "{{ jenkins_credentials_xml }}"
+      dest: "{{ jenkins_home_folder }}"
+      owner: jenkins
+      group: jenkins
+    become: true
+    become_method: sudo
+    
+  - name: Nadav Role | copy config.xml without initial pass or admin authentication
+    copy:
+      src: "{{ jenkins_config_xml_fixed }}"
+      dest: "{{ jenkins_config_xml_debian }}"
+      owner: jenkins
+      group: jenkins
+    become: true
+    become_method: sudo
+ 
+  - name: Nadav Role | copy users folder
+    copy:
+      src: "{{ jenkins_users_dir }}"
+      dest: "{{ jenkins_home_folder }}/"
+      owner: jenkins
+      group: jenkins
+      directory_mode: yes
+    become: true
+    become_method: sudo
