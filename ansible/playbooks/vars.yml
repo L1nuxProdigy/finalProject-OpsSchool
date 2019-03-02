@@ -29,4 +29,3 @@ jenkins_plugins:
   - workflow-multibranch
   - docker-workflow
   - template-project
-  - ec2

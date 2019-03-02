@@ -25,3 +25,5 @@
   jenkins_plugin:
     name: "{{ item }}"
   with_items: "{{ jenkins_plugins }}"
+  notify:
+  - restart jenkins
