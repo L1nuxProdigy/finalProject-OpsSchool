@@ -1,20 +1,17 @@
 ---
-- name: Configure jenkins machines with java
-  hosts: jenkins_machines
+- name: Clean Jenkins
+  hosts: jenkins_masters2
   roles:
-    - jenkins_common
+    - jenkins_leanteam
 
 - name: Install Jenkins Server Nadav Way
   hosts: jenkins_masters
   roles:
+    - jenkins_common
     - jenkins_server
-
-- name: Clean Jenkins
-  hosts: jenkins_masters2
-  roles:
-    - jenkins_server_old
-
-- name: Configure node machine with docker
+    
+- name: Configure node machine with java amd docker
   hosts: jenkins_nodes
   roles:
+    - jenkins_common
     - kubernetes_docker
