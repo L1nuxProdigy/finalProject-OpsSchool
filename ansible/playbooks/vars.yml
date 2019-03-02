@@ -34,6 +34,7 @@ jenkins_plugins:
   - workflow-multibranch
   - docker-workflow
   - template-project
+  - github-api
   
   - cloudbees-folder
   - antisamy-markup-formatter
