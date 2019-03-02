@@ -40,3 +40,12 @@
       group: jenkins
     become: true
     become_method: sudo
+  
+  - name: Nadav Role | copy credentials file
+    copy:
+      src: "{{ jenkins_credentials_xml }}"
+      dest: "{{ jenkins_home_folder }}"
+      owner: jenkins
+      group: jenkins
+    become: true
+    become_method: sudo
