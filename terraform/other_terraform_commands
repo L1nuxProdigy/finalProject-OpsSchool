@@ -15,5 +15,5 @@ terraform destroy -var-file='vars' -target aws_instance.Ansible_and_Consul_Serve
 terraform destroy -var-file='vars' -target aws_instance.Ansible_and_Consul_Server -target aws_instance.Spree
 
 ## destroy instances (K8s + Jenkins)
-terraform destroy -var-file='vars' -target aws_instance.Ansible_and_Consul_Server -target aws_instance.Kubernetes_Server -target aws_instance.Kubernetes_Node -target aws_instance.Jenkins_Server -target aws_instance.Jenkins_Another -target aws_instance.Jenkins_Slave
+terraform destroy -var-file='vars' -target aws_instance.Ansible_and_Consul_Server -target aws_instance.Kubernetes_Server -target aws_instance.Kubernetes_Node -target aws_instance.Jenkins_Server -target aws_instance.Jenkins_Another -target aws_instance.Jenkins_Slave -target aws_instance.Jenkins_Sserver2
 
