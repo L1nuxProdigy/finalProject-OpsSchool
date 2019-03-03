@@ -29,7 +29,9 @@ jenkins_plugins:
   - pipeline-stage-view
   - git
   - ssh-slaves
+  
   - kubernetes-cd
+  - ssh-agent
   
   - log-parser
   - copyartifact

@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: spree-test
-        image: d0ckerprodigy/spreeproject
+        image: d0ckerprodigy/spreeproject:latest
         ports:
         - containerPort: 3000
       nodeSelector:
