@@ -2,10 +2,11 @@
 kubeadm_token: "gqv3y0.91c3dhvt24c2s63h"
 k8s_master_ip: kubernetes_master_enter_here
 k8s_node_ip: kubernetes_node_one_enter_here
-k8s_replication_controller_path: /home/ubuntu/finalProject-OpsSchool/kubernetes/replication_controller.yml
-k8s_deployment_path: /home/ubuntu/finalProject-OpsSchool/kubernetes/deployment.yml
-k8s_svc_path: /home/ubuntu/finalProject-OpsSchool/kubernetes/service.yml
+k8s_replication_controller_path: /home/ubuntu/finalProject-OpsSchool/kubernetes/k8s_replication_controller.yml
+k8s_deployment_path: /home/ubuntu/finalProject-OpsSchool/kubernetes/k8s_deployment.yml
+k8s_svc_path: /home/ubuntu/finalProject-OpsSchool/kubernetes/k8s_service.yml
 kube_path_ubuntu_user: /home/ubuntu/.kube
+
 
 jenkins_fixed_config_files_path: /home/ubuntu/finalProject-OpsSchool/jenkins/config_files/JenkinsRunningFolder
 jenkins_home_folder: /var/lib/jenkins
