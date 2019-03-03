@@ -9,11 +9,11 @@
     become_user: ubuntu
     
   - name: K8S | deploy replication controller
-    shell: kubectl create -f {{ replication_controller_deployment_path }}
+    shell: kubectl create -f {{ k8s_deployment_path }}
     become: true
     become_user: ubuntu
 
   - name: K8S | deploy a network service
-    shell: kubectl create -f {{ svc_deployment_path }}
+    shell: kubectl create -f {{ k8s_svc_path }}
     become: true
     become_user: ubuntu

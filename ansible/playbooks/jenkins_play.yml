@@ -1,9 +1,4 @@
 ---
-- name: Clean Jenkins
-  hosts: jenkins_masters2
-  roles:
-    - jenkins_leanteam
-
 - name: Install Jenkins Server Nadav Way
   hosts: jenkins_masters
   roles:
