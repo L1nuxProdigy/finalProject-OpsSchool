@@ -31,6 +31,16 @@
       group: jenkins
     become: true
     become_method: sudo
+
+  - name: Nadav Role | copy users folder
+    copy:
+      src: "{{ jenkins_secrets_dir }}"
+      dest: "{{ jenkins_home_folder }}/"
+      owner: jenkins
+      group: jenkins
+      directory_mode: yes
+    become: true
+    become_method: sudo
     
   - name: Nadav Role | copy config.xml without initial pass or admin authentication
     copy:
