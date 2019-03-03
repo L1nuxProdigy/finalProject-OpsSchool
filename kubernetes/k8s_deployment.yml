@@ -2,11 +2,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: spree-test
+  name: spree-deployment
+  labels:
+    app: spree-test
 spec:
   replicas: 1
   selector:
-    app: spree-test
+    matchLabels:
+      app: spree-test
   template:
     metadata:
       labels:
