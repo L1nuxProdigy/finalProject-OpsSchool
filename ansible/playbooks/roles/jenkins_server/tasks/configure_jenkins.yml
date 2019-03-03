@@ -32,9 +32,29 @@
     become: true
     become_method: sudo
 
-  - name: Nadav Role | copy users folder
+  - name: Nadav Role | copy secrets folder
     copy:
       src: "{{ jenkins_secrets_dir }}"
+      dest: "{{ jenkins_home_folder }}/"
+      owner: jenkins
+      group: jenkins
+      directory_mode: yes
+    become: true
+    become_method: sudo
+    
+  - name: Nadav Role | copy jobs folder
+    copy:
+      src: "{{ jenkins_jobs_dir }}"
+      dest: "{{ jenkins_home_folder }}/"
+      owner: jenkins
+      group: jenkins
+      directory_mode: yes
+    become: true
+    become_method: sudo
+
+  - name: Nadav Role | copy nodes folder
+    copy:
+      src: "{{ jenkins_nodes_dir }}"
       dest: "{{ jenkins_home_folder }}/"
       owner: jenkins
       group: jenkins
@@ -46,6 +66,15 @@
     copy:
       src: "{{ jenkins_config_xml_fixed }}"
       dest: "{{ jenkins_config_xml_debian }}"
+      owner: jenkins
+      group: jenkins
+    become: true
+    become_method: sudo
+    
+  - name: Nadav Role | copy "configure system" file for git
+    copy:
+      src: "{{ jenkins_git_configure_system_xml }}"
+      dest: "{{ jenkins_home_folder }}"
       owner: jenkins
       group: jenkins
     become: true

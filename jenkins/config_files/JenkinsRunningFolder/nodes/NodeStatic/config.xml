@@ -1,3 +1,4 @@
+<?xml version='1.1' encoding='UTF-8'?>
 <slave>
   <name>NodeStatic</name>
   <description></description>
@@ -8,13 +9,13 @@
   <launcher class="hudson.plugins.sshslaves.SSHLauncher" plugin="ssh-slaves@1.29.4">
     <host>Change_Me_to_IP</host>
     <port>22</port>
-    <credentialsId>902d3b30-9c09-42fd-babf-c9a93b09c090</credentialsId>
+    <credentialsId>a9e580a1-1d3e-4e8a-929c-4f07a36ae54a</credentialsId>
     <launchTimeoutSeconds>210</launchTimeoutSeconds>
     <maxNumRetries>10</maxNumRetries>
     <retryWaitTime>15</retryWaitTime>
     <sshHostKeyVerificationStrategy class="hudson.plugins.sshslaves.verifiers.NonVerifyingKeyVerificationStrategy"/>
     <tcpNoDelay>true</tcpNoDelay>
   </launcher>
-  <label>node</label>
+  <label>Slave</label>
   <nodeProperties/>
 </slave>
