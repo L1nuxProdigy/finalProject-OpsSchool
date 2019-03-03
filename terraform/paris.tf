@@ -311,8 +311,8 @@ resource "aws_security_group" "SecurityGroup_main" {
 		description = "K8s Expose Service 4 Main App"
       }
 	ingress {
-		from_port   = 30001
-		to_port     = 30001
+		from_port   = 30002
+		to_port     = 30002
 		protocol    = "TCP"
 		cidr_blocks = ["0.0.0.0/0"]
 		description = "K8s Expose Service 4 Test App"
