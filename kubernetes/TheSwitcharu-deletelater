@@ -2,5 +2,7 @@ sed -i 's/d0ckerprodigy\/spreeproject/yeasy\/simple-web/g' /home/ubuntu/finalPro
 kubectl apply -f /home/ubuntu/finalProject-OpsSchool/kubernetes/k8s_deployment.yml
 kubectl apply -f /home/ubuntu/finalProject-OpsSchool/kubernetes/simple_web_k8s_service.yml
 
+kubectl apply -f /home/ubuntu/finalProject-OpsSchool/kubernetes/simple_web_k8s_deployment.yml
+
 not really important:
 docker run --rm -it -p 9200:80 yeasy/simple-web
