@@ -48,6 +48,7 @@
       dest: "{{ jenkins_home_folder }}/"
       owner: jenkins
       group: jenkins
+      mode: 0755
       directory_mode: yes
     become: true
     become_method: sudo
@@ -58,6 +59,7 @@
       dest: "{{ jenkins_home_folder }}/"
       owner: jenkins
       group: jenkins
+      mode: 0755
       directory_mode: yes
     become: true
     become_method: sudo
