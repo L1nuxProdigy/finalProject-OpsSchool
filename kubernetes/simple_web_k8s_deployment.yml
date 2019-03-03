@@ -1,0 +1,24 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spree-deployment
+  labels:
+    app: spree-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spree-test
+  template:
+    metadata:
+      labels:
+        app: spree-test
+    spec:
+      containers:
+      - name: spree-test
+        image: yeasy/simple-web
+        ports:
+        - containerPort: 80
+      nodeSelector:
+        Destiny: SpreeApp
