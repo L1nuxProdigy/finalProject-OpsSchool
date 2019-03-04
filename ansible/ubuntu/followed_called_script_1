@@ -65,7 +65,7 @@ consul_machine_name=consul-kubernetes-master
 Waiting_For_IP_Resolution "$consul_machine_name"
 sed -i 's/kubernetes_master_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/hosts.yml
 sed -i 's/kubernetes_master_enter_here/'$x3'/g' $ANSIBLE_PLAYBOOK_PATH/vars.yml
-sed -i 's/Change_Me_to_IP/'$x3'/g' $JENKINS_MASTER_CONFIGURATION_FILES/jobs/config.xml
+sed -i 's/Change_Me_to_IP/'$x3'/g' $JENKINS_MASTER_CONFIGURATION_FILES/jobs/CI_Spree_Pipe/config.xml
 
 ## Finding the Kubernetes Node IP and editing it to the hosts.yml file
 consul_machine_name=consul-kubernetes-node
