@@ -57,7 +57,6 @@
           sh &apos;ssh -o StrictHostKeyChecking=no ubuntu@Change_Me_to_IP \&apos;sed -i &quot;s/3000/80/g&quot; finalProject-OpsSchool/kubernetes/k8s_deployment.yml\&apos;&apos;
           sh &apos;ssh -o StrictHostKeyChecking=no ubuntu@Change_Me_to_IP \&apos;sed -i &quot;s/spreeproject[^ ]*/spreeproject:\&apos;$BUILD_NUMBER\&apos;/g&quot; finalProject-OpsSchool/kubernetes/k8s_deployment.yml\&apos;&apos;
           sh &apos;ssh -o StrictHostKeyChecking=no ubuntu@Change_Me_to_IP \&apos;kubectl apply -f /home/ubuntu/finalProject-OpsSchool/kubernetes/k8s_deployment.yml\&apos;&apos;
-          sh &apos;ssh -o StrictHostKeyChecking=no ubuntu@Change_Me_to_IP \&apos;kubectl delete svc spree-test-service\&apos;&apos;
           sh &apos;ssh -o StrictHostKeyChecking=no ubuntu@Change_Me_to_IP \&apos;kubectl apply -f /home/ubuntu/finalProject-OpsSchool/kubernetes/k8s_service.yml\&apos;&apos;
         }
       }
