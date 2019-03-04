@@ -4,7 +4,7 @@
   <keepDependencies>false</keepDependencies>
   <properties>
     <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.4">
-      <projectUrl>https://github.com/L1nuxProdigy/hookjenkins/</projectUrl>
+      <projectUrl>https://github.com/L1nuxProdigy/spreeLive</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
     <org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
@@ -26,7 +26,7 @@
   stages {
     stage(&apos;Cloning Git Repo&apos;) {
       steps {
-        git &apos;https://github.com/L1nuxProdigy/hookjenkins&apos;
+        git &apos;https://github.com/L1nuxProdigy/spreeLive&apos;
       }
     }
     stage(&apos;Building image&apos;) {
@@ -53,11 +53,8 @@
         stage (&apos;Deploy&apos;) {
       steps{
         sshagent(credentials : [&apos;a9e580a1-1d3e-4e8a-929c-4f07a36ae54a&apos;]) {
-                  sh &apos;ssh -o StrictHostKeyChecking=no ubuntu@Change_Me_to_IP \&apos;sed -i &quot;s/port: 3000/port: 80/g&quot; finalProject-OpsSchool/kubernetes/k8s_service.yml\&apos;&apos;
-          sh &apos;ssh -o StrictHostKeyChecking=no ubuntu@Change_Me_to_IP \&apos;sed -i &quot;s/3000/80/g&quot; finalProject-OpsSchool/kubernetes/k8s_deployment.yml\&apos;&apos;
           sh &apos;ssh -o StrictHostKeyChecking=no ubuntu@Change_Me_to_IP \&apos;sed -i &quot;s/spreeproject[^ ]*/spreeproject:\&apos;$BUILD_NUMBER\&apos;/g&quot; finalProject-OpsSchool/kubernetes/k8s_deployment.yml\&apos;&apos;
           sh &apos;ssh -o StrictHostKeyChecking=no ubuntu@Change_Me_to_IP \&apos;kubectl apply -f /home/ubuntu/finalProject-OpsSchool/kubernetes/k8s_deployment.yml\&apos;&apos;
-          sh &apos;ssh -o StrictHostKeyChecking=no ubuntu@Change_Me_to_IP \&apos;kubectl apply -f /home/ubuntu/finalProject-OpsSchool/kubernetes/k8s_service.yml\&apos;&apos;
         }
       }
         }
