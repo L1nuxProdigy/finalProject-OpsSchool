@@ -10,6 +10,9 @@ CONSUL_PATH=$REPO_HOME_FOLDER/'consul/ubuntu'
 PROMETHEUS_PATH=$REPO_HOME_FOLDER/'prometheus'
 SQL_PATH=$REPO_HOME_FOLDER/'mysql'
 
+cd $USER_HOME_FOLDER
+git clone https://github.com/L1nuxProdigy/finalProject-OpsSchool
+
 LOCAL_IPV4=$(curl "http://169.254.169.254/latest/meta-data/local-ipv4")
 
 ## some files are getting locked in the installation process so delete them prehand ##
