@@ -50,7 +50,7 @@
         sh &quot;docker rmi $registry:$BUILD_NUMBER&quot;
       }
     }
-        stage (&apos;Deploy&apos;) {
+        stage (&apos;Apply to K8s&apos;) {
       steps{
         sshagent(credentials : [&apos;a9e580a1-1d3e-4e8a-929c-4f07a36ae54a&apos;]) {
           sh &apos;ssh -o StrictHostKeyChecking=no ubuntu@Change_Me_to_IP \&apos;sed -i &quot;s/spreeproject[^ ]*/spreeproject:\&apos;$BUILD_NUMBER\&apos;/g&quot; finalProject-OpsSchool/kubernetes/k8s_deployment.yml\&apos;&apos;
