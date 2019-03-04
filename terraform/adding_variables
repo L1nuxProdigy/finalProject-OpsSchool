@@ -33,6 +33,15 @@ KUBERNETES_NODE=$KUBERNETES_PATH/'initial_call_for_kubernetes_node'
 SPREE_PATH=$REPO_HOME_FOLDER/'spree'
 SPREE_USER_DATA=$SPREE_PATH/'spree_test'
 
+# Prometheus #
+PROMETHEUS_PATH=$REPO_HOME_FOLDER/'prometheus'
+PROMETHEUS_USER_DATA=$PROMETHEUS_PATH/'initial_call_for_prometheus'
+
+# Prometheus #
+ELK_PATH=$REPO_HOME_FOLDER/'elk'
+ELASTIC_SEARCH_USER_DATA=$ELK_PATH/'initial_call_for_elasticsearch'
+KIBANA_USER_DATA=$ELK_PATH/'initial_call_for_kibana'
+
 ### setting a "tempVars" file to replace the original "vars" file
 cat $TERRAFORM_VARIABLE_FILE | head -3 > $TERRAFORM_VARIABLE_TEMP_FILE
 
@@ -57,6 +66,15 @@ echo -e "\n### Temp ###\n" >> $TERRAFORM_VARIABLE_TEMP_FILE
 echo 'jenkins_server_user_data_script = "'$JENKINS_SERVER'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
 echo 'jenkins_another_user_data_script = "'$JENKINS_ANOTHER'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
 echo 'jenkins_node_user_data_script = "'$JENKINS_NODE'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
+
+# Prometheus #
+echo -e "\n### Spree ###\n" >> $TERRAFORM_VARIABLE_TEMP_FILE
+echo 'prometheus_user_data_script = "'$PROMETHEUS_USER_DATA'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
+
+# ELK #
+echo -e "\n### Spree ###\n" >> $TERRAFORM_VARIABLE_TEMP_FILE
+echo 'elastic_search_user_data_script = "'$ELASTIC_SEARCH_USER_DATA'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
+echo 'kibana_user_data_script = "'$KIBANA_USER_DATA'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
 
 
 ### moving the new data from "tempVars" to "vars"

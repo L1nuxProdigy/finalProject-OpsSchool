@@ -1,0 +1,25 @@
+#!/bin/bash
+
+LOCAL_IPV4=$(curl "http://169.254.169.254/latest/meta-data/local-ipv4")
+
+## elasticsearch prerequisites- JAVA
+sudo add-apt-repository ppa:openjdk-r/ppa -y
+sudo apt-get update -y
+sudo apt-get install openjdk-8-jdk-headless -y
+
+## elasticsearch install
+wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.5.4.deb
+dpkg -i elasticsearch-6.5.4.deb
+
+## setting heapsize
+sudo sed -i 's/Xms1g/Xms256m/g' /etc/elasticsearch/jvm.options
+sudo sed -i 's/Xmx1g/Xmx256m/g' /etc/elasticsearch/jvm.options
+echo "network.host: ${LOCAL_IPV4}" >> /etc/elasticsearch/elasticsearch.yml
+
+## running elasticsearch
+#sudo -su ubuntu /home/ubuntu/elasticsearch-6.5.4/bin/elasticsearch -d
+#sudo systemctl -w vm.max_map_count=262144
+systemctl enable elasticsearch
+systemctl start elasticsearch
+
+

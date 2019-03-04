@@ -1,0 +1,5 @@
+---
+- name: Configure node machine with java amd docker
+  hosts: prometheus_machine
+  roles:
+    - prometheus_role
