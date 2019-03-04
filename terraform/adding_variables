@@ -37,10 +37,15 @@ SPREE_USER_DATA=$SPREE_PATH/'spree_test'
 PROMETHEUS_PATH=$REPO_HOME_FOLDER/'prometheus'
 PROMETHEUS_USER_DATA=$PROMETHEUS_PATH/'initial_call_for_prometheus'
 
-# Prometheus #
+# ELK #
 ELK_PATH=$REPO_HOME_FOLDER/'elk'
 ELASTIC_SEARCH_USER_DATA=$ELK_PATH/'initial_call_for_elasticsearch'
 KIBANA_USER_DATA=$ELK_PATH/'initial_call_for_kibana'
+
+# MySQL #
+SQL_PATH=$REPO_HOME_FOLDER/'mysql'
+MYSQL_MASTER_USER_DATA=$SQL_PATH/'mysql_master_require_deprication'
+MYSQL_SLAVE_USER_DATA=$SQL_PATH/'mysql_slave_require_deprication'
 
 ### setting a "tempVars" file to replace the original "vars" file
 cat $TERRAFORM_VARIABLE_FILE | head -3 > $TERRAFORM_VARIABLE_TEMP_FILE
@@ -75,6 +80,11 @@ echo 'prometheus_user_data_script = "'$PROMETHEUS_USER_DATA'"' >> $TERRAFORM_VAR
 echo -e "\n### Spree ###\n" >> $TERRAFORM_VARIABLE_TEMP_FILE
 echo 'elastic_search_user_data_script = "'$ELASTIC_SEARCH_USER_DATA'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
 echo 'kibana_user_data_script = "'$KIBANA_USER_DATA'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
+
+# MySQL #
+echo -e "\n### Spree ###\n" >> $TERRAFORM_VARIABLE_TEMP_FILE
+echo 'mysql_Server_user_data_script = "'$MYSQL_MASTER_USER_DATA'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
+echo 'mysql_Slave_user_data_script = "'$MYSQL_SLAVE_USER_DATA'"' >> $TERRAFORM_VARIABLE_TEMP_FILE
 
 
 ### moving the new data from "tempVars" to "vars"

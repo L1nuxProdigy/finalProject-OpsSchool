@@ -37,6 +37,10 @@ variable "prometheus_user_data_script" {}
 variable "elastic_search_user_data_script" {}
 variable "kibana_user_data_script" {}
 
+# My_SQL
+variable "mysql_Server_user_data_script" {}
+variable "mysql_Slave_user_data_script" {}
+
 
 
 ##################################################################################
@@ -331,6 +335,13 @@ resource "aws_security_group" "SecurityGroup_main" {
 		cidr_blocks = ["0.0.0.0/0"]
 		description = "K8s cluster join"
 	}
+	ingress {
+		from_port   = 3306
+		to_port     = 3306
+		protocol    = "TCP"
+		cidr_blocks = ["0.0.0.0/0"]
+		description = "MySQL"
+	}
 	egress {
 		from_port       = 0
 		to_port         = 0
@@ -480,4 +491,34 @@ resource "aws_instance" "ELK_Kibana" {
 	}
 	
 	user_data = "${file(var.kibana_user_data_script)}"
+}
+
+resource "aws_instance" "MYSQL_Server" {
+	ami           = "${var.ubuntu_image_16-04}"
+	instance_type = "t2.micro"
+	key_name        = "${var.aws_key_name}"
+	subnet_id = "${aws_subnet.Subnet_main.id}"
+	vpc_security_group_ids = ["${aws_security_group.SecurityGroup_main.id}"]
+	iam_instance_profile = "${aws_iam_instance_profile.Consul_IAM_Profile.name}"
+	
+	tags = {
+	Name = "MySQL_Server-TerraBuild"
+	}
+	
+	user_data = "${file(var.mysql_Server_user_data_script)}"
+}
+
+resource "aws_instance" "MYSQL_Slave" {
+	ami           = "${var.ubuntu_image_16-04}"
+	instance_type = "t2.micro"
+	key_name        = "${var.aws_key_name}"
+	subnet_id = "${aws_subnet.Subnet_main.id}"
+	vpc_security_group_ids = ["${aws_security_group.SecurityGroup_main.id}"]
+	iam_instance_profile = "${aws_iam_instance_profile.Consul_IAM_Profile.name}"
+	
+	tags = {
+	Name = "MySQL_Slave-TerraBuild"
+	}
+	
+	user_data = "${file(var.mysql_Slave_user_data_script)}"
 }
