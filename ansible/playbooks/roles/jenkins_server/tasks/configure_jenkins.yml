@@ -45,22 +45,18 @@
 - name: Nadav Role | copy jobs folder
   copy:
     src: "{{ jenkins_jobs_dir }}"
-    dest: "{{ jenkins_home_folder }}/"
+    dest: "{{ jenkins_home_folder }}"
     owner: jenkins
     group: jenkins
-    mode: 0755
-    directory_mode: yes
   become: true
   become_method: sudo
 
 - name: Nadav Role | copy nodes folder
   copy:
     src: "{{ jenkins_nodes_dir }}"
-    dest: "{{ jenkins_home_folder }}/"
+    dest: "{{ jenkins_home_folder }}"
     owner: jenkins
     group: jenkins
-    mode: 0755
-    directory_mode: yes
   become: true
   become_method: sudo
 
