@@ -47,5 +47,22 @@ EOCSU
 systemctl daemon-reload
 systemctl start consul &
 
+cat << EOCSU >/etc/consul.d/sql-slave.json
+{
+ "service": {
+   "name": "sql-slave",
+   "tags": ["sql-slave"],
+   "port": 3306,
+   "check": {
+        "id": "sql-slave-health",
+       "name": "sql-slave TCP health",
+       "tcp": "${LOCAL_IPV4}:3306",
+       "interval": "10s",
+        "timeout": "1s"
+       }
+   }
+}
+EOCSU
+
 
 #sudo echo '{"service": {"name": "dummy_exporter", "tags": ["dummy"], "port": 65433}}' > /etc/consul.d/dummy_exporter.json
