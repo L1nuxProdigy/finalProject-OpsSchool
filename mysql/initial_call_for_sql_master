@@ -8,6 +8,7 @@ ANSIBLE_PATH=$REPO_HOME_FOLDER/'ansible/ubuntu'
 ANSIBLE_PLAYBOOK_PATH=$ANSIBLE_PATH/../'playbooks'
 CONSUL_PATH=$REPO_HOME_FOLDER/'consul/ubuntu'
 PROMETHEUS_PATH=$REPO_HOME_FOLDER/'prometheus'
+SQL_PATH=$REPO_HOME_FOLDER/'mysql'
 
 ## cloning git repo
 cd $USER_HOME_FOLDER
@@ -17,10 +18,10 @@ git clone https://github.com/L1nuxProdigy/finalProject-OpsSchool
 $ANSIBLE_PATH/'ansible_node'
 
 ## installing consul
-$CONSUL_PATH/'consul_client_prometheus'
+$CONSUL_PATH/'consul_client_mysql_server'
 
 ## installing prometheus
-$PROMETHEUS_PATH/'prometheus_install_require_deprication'
+$SQL_PATH/'mysql_master_require_deprication'
 
 ## in practive does nothing, for validation only
 chown -R ubuntu $REPO_HOME_FOLDER

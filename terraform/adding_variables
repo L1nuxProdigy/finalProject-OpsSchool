@@ -44,8 +44,8 @@ KIBANA_USER_DATA=$ELK_PATH/'initial_call_for_kibana'
 
 # MySQL #
 SQL_PATH=$REPO_HOME_FOLDER/'mysql'
-MYSQL_MASTER_USER_DATA=$SQL_PATH/'mysql_master_require_deprication'
-MYSQL_SLAVE_USER_DATA=$SQL_PATH/'mysql_slave_require_deprication'
+MYSQL_MASTER_USER_DATA=$SQL_PATH/'initial_call_for_sql_master'
+MYSQL_SLAVE_USER_DATA=$SQL_PATH/'initial_call_for_sql_slave'
 
 ### setting a "tempVars" file to replace the original "vars" file
 cat $TERRAFORM_VARIABLE_FILE | head -3 > $TERRAFORM_VARIABLE_TEMP_FILE
