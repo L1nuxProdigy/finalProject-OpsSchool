@@ -390,7 +390,7 @@ resource "aws_instance" "ELK_ElasticSearch" {
 	Name = "ELK_ElasticSearch-TerraBuild"
 	}
 	
-	user_data = "${file(var.prometheus_user_data_script)}"
+	user_data = "${file(var.elastic_search_user_data_script)}"
 }
 
 resource "aws_instance" "ELK_Kibana" {
