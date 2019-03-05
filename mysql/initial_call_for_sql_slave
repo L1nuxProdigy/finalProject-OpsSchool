@@ -8,6 +8,7 @@ ANSIBLE_PATH=$REPO_HOME_FOLDER/'ansible/ubuntu'
 ANSIBLE_PLAYBOOK_PATH=$ANSIBLE_PATH/../'playbooks'
 CONSUL_PATH=$REPO_HOME_FOLDER/'consul/ubuntu'
 PROMETHEUS_PATH=$REPO_HOME_FOLDER/'prometheus'
+ELK_PATH=$REPO_HOME_FOLDER/'elk'
 SQL_PATH=$REPO_HOME_FOLDER/'mysql'
 
 ## cloning git repo
@@ -22,6 +23,9 @@ $CONSUL_PATH/'consul_client_mysql_slave'
 
 ## installing prometheus
 $SQL_PATH/'mysql_slave_require_deprication'
+
+## installing filebeat for syslogs to kibana
+$ELK_PATH/'file_beat_install_require_deprication'
 
 ## in practive does nothing, for validation only
 chown -R ubuntu $REPO_HOME_FOLDER
