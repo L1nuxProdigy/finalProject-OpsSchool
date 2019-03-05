@@ -4,9 +4,9 @@ set -x
 export TERM=xterm-256color
 export DEBIAN_FRONTEND=noninteractive
 LOCAL_IPV4=$(curl "http://169.254.169.254/latest/meta-data/local-ipv4")
-CONSUL_NODE_NAME=consul-kibana
-SERVICE_PORT_NUMBER=5601
-CONSUL_SERVICE_NAME=kibana
+CONSUL_NODE_NAME=consul-prometheus
+SERVICE_PORT_NUMBER=9090
+CONSUL_SERVICE_NAME=prometheus
 
 # Downloading and installing Prerequisites
 apt-get update -y

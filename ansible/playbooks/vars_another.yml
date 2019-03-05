@@ -32,7 +32,6 @@ jenkins_plugins:
   - pipeline-stage-view
   - git
   - ssh-slaves
-  - github
   
   - kubernetes-cd
   - ssh-agent

@@ -1,0 +1,6 @@
+---
+- include: "install_jenkins.yml"
+
+- include: "configure_jenkins.yml"
+
+- include: "configure_jenkins_plugins.yml"
