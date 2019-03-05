@@ -1,15 +1,23 @@
 #!/bin/bash
 
+# This script is intended to install Consul client
+# on Ubuntu 16.04 Xenial managed by SystemD
+# including docker and DnsMasq for *.service.consul DNS resolving
+#
+# Script assume that instance is running in AWS and have "ec2:DescribeInstances" permissions in IAM Role
+
+
+
 set -x
 export TERM=xterm-256color
 export DEBIAN_FRONTEND=noninteractive
-LOCAL_IPV4=$(curl "http://169.254.169.254/latest/meta-data/local-ipv4")
-CONSUL_NODE_NAME=consul-kibana
-SERVICE_PORT_NUMBER=5601
-CONSUL_SERVICE_NAME=kibana
 
-# Downloading and installing Prerequisites
-apt-get update -y
+#Bringing the Information
+echo "Determining local IP address"
+LOCAL_IPV4=$(curl "http://169.254.169.254/latest/meta-data/local-ipv4")
+echo "Using ${LOCAL_IPV4} as IP address for configuration and anouncement"
+
+apt-get update
 apt-get install -y \
    apt-transport-https \
    ca-certificates \
@@ -18,7 +26,9 @@ apt-get install -y \
    jq \
    unzip \
    dnsmasq \
-   
+    gdebi
+
+
 
 echo "Enabling *.service.consul resolution system wide"
 cat << EODMCF >/etc/dnsmasq.d/10-consul
@@ -27,6 +37,7 @@ server=/consul/127.0.0.1#8600
 EODMCF
 
 systemctl restart dnsmasq
+
 CHECKPOINT_URL="https://checkpoint-api.hashicorp.com/v1/check"
 CONSUL_VERSION=$(curl -s "${CHECKPOINT_URL}"/consul | jq .current_version | tr -d '"')
 
@@ -43,7 +54,7 @@ echo "Configuring Consul"
 mkdir -p /var/lib/consul /etc/consul.d
 
 cat << EOCCF >/etc/consul.d/agent.hcl
-node_name = "$CONSUL_NODE_NAME"
+node_name = "consul-kibana"
 client_addr =  "0.0.0.0"
 recursors =  ["127.0.0.1"]
 bootstrap =  false
@@ -74,16 +85,16 @@ EOCSU
 systemctl daemon-reload
 systemctl start consul &
 
-cat << EOCSU >/etc/consul.d/$CONSUL_SERVICE_NAME.json
+cat << EOCSU >/etc/consul.d/kibana.json
 {
  "service": {
-   "name": "$CONSUL_SERVICE_NAME",
-   "tags": ["$CONSUL_SERVICE_NAME"],
-   "port": $SERVICE_PORT_NUMBER,
+   "name": "kibana",
+   "tags": ["kibana"],
+   "port": 5601,
    "check": {
-        "id": "$CONSUL_SERVICE_NAME-health",
-       "name": "$CONSUL_SERVICE_NAME TCP health",
-       "tcp": "${LOCAL_IPV4}:$SERVICE_PORT_NUMBER",
+        "id": "kibana-health",
+       "name": "kibana TCP health",
+       "tcp": "${LOCAL_IPV4}:5601",
        "interval": "10s",
         "timeout": "1s"
        }
