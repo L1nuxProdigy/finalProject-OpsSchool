@@ -38,6 +38,6 @@ while [[ $lines_in_page = 0 ]]; do
 	lines_in_page=$(curl 'http://'${LOCAL_IPV4}':5601/app/kibana#/management/kibana/objects?_g=()' | wc -l)
 done
 # creating filebeat index-patternt
-# /home/ubuntu/finalProject-OpsSchool/elk/json/kibana_script_for_all_curls
+/home/ubuntu/finalProject-OpsSchool/elk/json/kibana_script_for_all_curls
 
 
