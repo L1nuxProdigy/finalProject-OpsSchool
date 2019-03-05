@@ -4,9 +4,9 @@ set -x
 export TERM=xterm-256color
 export DEBIAN_FRONTEND=noninteractive
 LOCAL_IPV4=$(curl "http://169.254.169.254/latest/meta-data/local-ipv4")
-CONSUL_NODE_NAME=consul-prometheus
-SERVICE_PORT_NUMBER=9090
-CONSUL_SERVICE_NAME=prometheus
+CONSUL_NODE_NAME=consul-jenkins-master
+SERVICE_PORT_NUMBER=8080
+CONSUL_SERVICE_NAME=jenkins-master
 
 # Downloading and installing Prerequisites
 apt-get update -y
@@ -74,7 +74,7 @@ EOCSU
 systemctl daemon-reload
 systemctl start consul &
 
-cat << EOCSU >/etc/consul.d/sql-slave.json
+cat << EOCSU >/etc/consul.d/$CONSUL_SERVICE_NAME.json
 {
  "service": {
    "name": "$CONSUL_SERVICE_NAME",

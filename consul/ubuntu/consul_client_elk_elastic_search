@@ -74,7 +74,7 @@ EOCSU
 systemctl daemon-reload
 systemctl start consul &
 
-cat << EOCSU >/etc/consul.d/sql-slave.json
+cat << EOCSU >/etc/consul.d/$CONSUL_SERVICE_NAME.json
 {
  "service": {
    "name": "$CONSUL_SERVICE_NAME",
