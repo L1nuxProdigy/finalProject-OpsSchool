@@ -42,7 +42,8 @@ rm -rf percona-release_latest.$(lsb_release -sc)_all.deb
 ##  Configuring MySQL ##
 sudo bash -c "echo bind-address = ${LOCAL_IPV4} >> /etc/mysql/percona-server.conf.d/mysqld.cnf"
 sudo bash -c "echo server-id=2 >> /etc/mysql/percona-server.conf.d/mysqld.cnf"
-sudo bash -c "echo log-bin=/var/lib/mysql/mysql-bin >> /etc/mysql/percona-server.conf.d/mysqld.cnf"
+sudo bash -c "echo relay_log=/var/lib/mysql/relay-log >> /etc/mysql/percona-server.conf.d/mysqld.cnf"
+## for server not for slave ###sudo bash -c "echo log-bin=/var/lib/mysql/mysql-bin >> /etc/mysql/percona-server.conf.d/mysqld.cnf"
 sudo service mysql restart
 sleep 30
 sudo mysql -e "CREATE DATABASE spree;"

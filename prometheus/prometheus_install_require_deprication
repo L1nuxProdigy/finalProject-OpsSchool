@@ -44,17 +44,14 @@ while [[ ${#x3} = 0 ]]; do
 		x3=$(echo $x2 | cut -d ' ' -f5)
 done
 
-echo 'filebeat.modules:
-- module: system
-  syslog:
-    enabled: true
-  auth:
-    enabled: true
-name: test
+echo 'filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    - /var/log/syslog
+
 output.elasticsearch:
-  hosts: ["'${x3}':9200"]
-setup.kibana.host: "'${y3}':5601"
-setup.dashboards.enabled: true' > /etc/filebeat/filebeat.yml
+  hosts: ["'${x3}':9200"]' > /etc/filebeat/filebeat.yml
 
 sudo systemctl enable filebeat.service
 sudo systemctl start filebeat.service
