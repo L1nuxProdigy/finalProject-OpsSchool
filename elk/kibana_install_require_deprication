@@ -31,13 +31,13 @@ echo 'server.host: "'$LOCAL_IPV4'"' >> /etc/kibana/kibana.yml
 systemctl enable kibana
 systemctl start kibana
 
-## checking if kibana is up- wonky way
-# lines_in_page=$(curl 'http://'${LOCAL_IPV4}':5601/app/kibana#/management/kibana/objects?_g=()' | wc -l)
-# while [[ $lines_in_page = 0 ]]; do
-	# sleep 15
-	# lines_in_page=$(curl 'http://'${LOCAL_IPV4}':5601/app/kibana#/management/kibana/objects?_g=()' | wc -l)
-# done
-## creating filebeat index-patternt
-# cd /home/ubuntu/my-opsSchool/middle_project/ELK/json
-# ./kibana_script_for_all_curls
+# checking if kibana is up- wonky way
+lines_in_page=$(curl 'http://'${LOCAL_IPV4}':5601/app/kibana#/management/kibana/objects?_g=()' | wc -l)
+while [[ $lines_in_page = 0 ]]; do
+	sleep 15
+	lines_in_page=$(curl 'http://'${LOCAL_IPV4}':5601/app/kibana#/management/kibana/objects?_g=()' | wc -l)
+done
+# creating filebeat index-patternt
+/home/ubuntu/finalProject-OpsSchool/elk/json/kibana_script_for_all_curls
+
 

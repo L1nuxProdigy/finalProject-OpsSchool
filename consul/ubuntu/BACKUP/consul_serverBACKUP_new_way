@@ -4,9 +4,7 @@ set -x
 export TERM=xterm-256color
 export DEBIAN_FRONTEND=noninteractive
 LOCAL_IPV4=$(curl "http://169.254.169.254/latest/meta-data/local-ipv4")
-CONSUL_NODE_NAME=consul-prometheus
-SERVICE_PORT_NUMBER=9090
-CONSUL_SERVICE_NAME=prometheus
+CONSUL_NODE_NAME=consul_server
 
 # Downloading and installing Prerequisites
 apt-get update -y
@@ -73,23 +71,5 @@ EOCSU
 
 systemctl daemon-reload
 systemctl start consul &
-
-cat << EOCSU >/etc/consul.d/sql-slave.json
-{
- "service": {
-   "name": "$CONSUL_SERVICE_NAME",
-   "tags": ["$CONSUL_SERVICE_NAME"],
-   "port": $SERVICE_PORT_NUMBER,
-   "check": {
-        "id": "$CONSUL_SERVICE_NAME-health",
-       "name": "$CONSUL_SERVICE_NAME TCP health",
-       "tcp": "${LOCAL_IPV4}:$SERVICE_PORT_NUMBER",
-       "interval": "10s",
-        "timeout": "1s"
-       }
-   }
-}
-EOCSU
-
 
 #sudo echo '{"service": {"name": "dummy_exporter", "tags": ["dummy"], "port": 65433}}' > /etc/consul.d/dummy_exporter.json
