@@ -39,7 +39,7 @@ echo 'filebeat.inputs:
     - /var/log/syslog
 
 output.elasticsearch:
-  hosts: ["kibana.service.consul"]' > /etc/filebeat/filebeat.yml
+  hosts: ["'${x3}':9200"]' > /etc/filebeat/filebeat.yml
 
 sudo systemctl enable filebeat.service
 sudo systemctl start filebeat.service
